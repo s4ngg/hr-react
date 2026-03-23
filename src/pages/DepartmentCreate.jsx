@@ -1,9 +1,48 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/department-create.css?inline";
+import { useCreateDepartment } from "../query/departmentQuery";
 
 function DepartmentCreate() {
+    const navigate = useNavigate();
+    const { mutate: create, isPending } = useCreateDepartment();
+
+    const [form, setForm] = useState({
+        deptCode: "",
+        deptName: "",
+        managerId: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = () => {
+        if (!form.deptCode.trim() || !form.deptName.trim()) {
+            alert("부서 코드와 부서명은 필수입니다.");
+            return;
+        }
+        create(
+            {
+                deptCode: form.deptCode,
+                deptName: form.deptName,
+                managerId: form.managerId ? Number(form.managerId) : null,
+            },
+            {
+                onSuccess: () => {
+                    alert("부서가 생성되었습니다.");
+                    navigate("/department-management");
+                },
+                onError: (err) => {
+                    alert(err.response?.data?.message ?? "생성 실패");
+                },
+            }
+        );
+    };
 
     return (
         <>
@@ -34,51 +73,53 @@ function DepartmentCreate() {
                                             className="input-field"
                                             placeholder="예: DEPT-001"
                                             type="text"
+                                            name="deptCode"
+                                            value={form.deptCode}
+                                            onChange={handleChange}
                                         />
                                     </div>
-
                                     <div className="form-control">
                                         <label className="label">부서명</label>
                                         <input
                                             className="input-field"
                                             placeholder="부서 이름을 입력하세요"
                                             type="text"
+                                            name="deptName"
+                                            value={form.deptName}
+                                            onChange={handleChange}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="form-control">
-                                    <label className="label">부서장</label>
+                                    <label className="label">부서장 ID (선택)</label>
                                     <div className="search-field-wrapper">
                                         <span className="material-symbols-outlined">person_search</span>
                                         <input
                                             className="input-field"
-                                            placeholder="사번 입력"
-                                            type="text"
+                                            placeholder="직원 ID 입력"
+                                            type="number"
+                                            name="managerId"
+                                            value={form.managerId}
+                                            onChange={handleChange}
                                         />
                                     </div>
-                                </div>
-
-                                <div className="form-control">
-                                    <label className="label">부서 설명</label>
-                                    <textarea
-                                        className="input-field"
-                                        placeholder="부서의 주요 역할 및 업무 범위를 상세히 입력하세요..."
-                                        rows={4}
-                                        defaultValue={""}
-                                    />
                                 </div>
 
                                 <div className="form-footer">
                                     <button
                                         className="btn btn-secondary"
-                                        onClick={() => {
-                                            window.location.href = "/department-management";
-                                        }}
+                                        onClick={() => navigate("/department-management")}
                                     >
                                         취소
                                     </button>
-                                    <button className="btn btn-primary">저장하기</button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={handleSubmit}
+                                        disabled={isPending}
+                                    >
+                                        {isPending ? "저장 중..." : "저장하기"}
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -92,40 +133,20 @@ function DepartmentCreate() {
                                 <ul className="info-list">
                                     <li>
                                         <span className="dot">•</span>
-                                        <span>
-                                            부서 코드는 고유해야 하며 한 번 등록 시 시스템 추적용으로 사용됩니다.
-                                        </span>
+                                        <span>부서 코드는 고유해야 하며 한 번 등록 시 시스템 추적용으로 사용됩니다.</span>
                                     </li>
                                     <li>
                                         <span className="dot">•</span>
-                                        <span>
-                                            부서장은 조직도 상의 결재 라인 구축에 핵심적인 역할을 합니다.
-                                        </span>
+                                        <span>부서장은 조직도 상의 결재 라인 구축에 핵심적인 역할을 합니다.</span>
                                     </li>
                                 </ul>
                             </div>
-
-                            <div className="history-card">
-                                <p className="history-title">최근 등록된 부서 (상위 5개)</p>
-                                <div className="history-item">
-                                    <div className="history-item-info">
-                                        <p>AI Lab</p>
-                                        <p>TECH-04</p>
-                                    </div>
-                                    <span className="history-tag">2일 전</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
-
-                    <footer className="footer-meta">
-                        <p>© 2024 Nexus Pro HR Systems. All architectural standards applied.</p>
-                    </footer>
                 </div>
             </main>
-
         </>
-    )
+    );
 }
 
 export default withPageStyle(DepartmentCreate, "department-create.css", pageCss);
