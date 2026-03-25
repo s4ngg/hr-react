@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>대시보드 (Vanilla CSS)</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./dashboard.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-box">
+                <div class="logo-icon">
+                    <span class="material-symbols-outlined">architecture</span>
+                </div>
+                <div class="logo-text">
+                    <h2>운영 포털</h2>
+                    <p>글로벌 HR 시스템</p>
+                </div>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-link active" href="./dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-sm">대시보드</span>
+            </a>
+            <a class="nav-link" href="./employee-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="text-sm">직원 관리</span>
+            </a>
+            <a class="nav-link" href="./department-management.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="text-sm">부서 관리</span>
+            </a>
+            <a class="nav-link" href="./attendance-management.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="text-sm">근태 관리</span>
+            </a>
+            <a class="nav-link" href="./vacation-management.html">
+                <span class="material-symbols-outlined">event_busy</span>
+                <span class="text-sm">휴가 관리</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a class="nav-link" href="support.html">
+                <span class="material-symbols-outlined">help</span>
+                고객 센터
+            </a>
+            <a class="nav-link logout" href="logout.html">
+                <span class="material-symbols-outlined">logout</span>
+                로그아웃
+            </a>
+        </div>
+    </aside>
+    <!-- Top Bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <h1>Architect Ledger HR</h1>
+            <div class="search-bar">
+                <span class="material-symbols-outlined"
+                    style="font-size: 18px; color: var(--on-surface-variant)">search</span>
+                <input placeholder="자료 검색..." type="text" />
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <div class="user-profile">
+                <div class="user-info">
+                    <p class="user-name">마커스 베리티</p>
+                    <p class="user-role">수석 프로젝트 아키텍트 (팀장)</p>
+                </div>
+                <img alt="Profile" class="avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD_l8kevGXJ2LE6GRSotSyLW3KIRZbLy1nJpq7NJjsr7K0rF8Y2ogq8rz04NNvqEA2GMq_YbrDOzgCm7Djdma9586_uDn3mO4fTGshaFAwjYe1XrOpAfnFc5oSsAlvO2QCcI6MHaA-eFwOCl2icVY-RVF9WlvT1OScb2laeY76kAamJF09j045LnHajahYQ-k4imgTpn4qjaZ8P60SJ-Tk2_zXJigpsNghmkdQQaDVQiqmDUJtkIfpB_FKmJJQ1K-e7AOUIbVAx7oi" />
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main>
+        <section class="editorial-header">
+            <p class="breadcrumb">워크스페이스 대시보드</p>
+            <h2 class="welcome-title">반갑습니다, 마커스 님.</h2>
+            <p class="welcome-subtitle">오늘은 10월 24일 화요일입니다. 대기 중인 승인 건이 3건 있으며, 팀원 중 1명이 부재중입니다.</p>
+        </section>
+        <div class="dashboard-grid">
+            <!-- Attendance Card -->
+            <div class="card attendance-card">
+                <div>
+                    <div class="card-label-row">
+                        <span class="card-label">근태 현황</span>
+                        <div class="status-badge">
+                            <span class="dot"></span>
+                            출근 완료
+                        </div>
+                    </div>
+                    <p class="time-display">09:14<span class="time-ampm">AM</span></p>
+                    <p class="date-sub">체크인 시간: 2023년 10월 24일</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-disabled">
+                        <span class="material-symbols-outlined">login</span>
+                        출근하기
+                    </button>
+                    <button class="btn btn-primary">
+                        <span class="material-symbols-outlined">logout</span>
+                        퇴근하기
+                    </button>
+                </div>
+            </div>
+            <!-- Stats Column -->
+            <div class="stats-col">
+                <div class="card stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-blue">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                        </div>
+                        <div>
+                            <p class="stat-title">연차 휴가</p>
+                            <p class="stat-desc">잔여 휴가 일수</p>
+                        </div>
+                    </div>
+                    <div class="stat-value-box">
+                        <span class="stat-value" style="color: var(--primary);">12.5</span>
+                        <span class="stat-unit">일</span>
+                    </div>
+                    <div class="stat-bar">
+                        <div class="stat-progress" style="width: 62.5%;"></div>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-orange">
+                            <span class="material-symbols-outlined">work_history</span>
+                        </div>
+                        <div>
+                            <p class="stat-title">이번 달 근무</p>
+                            <p class="stat-desc">출근 기록 일수</p>
+                        </div>
+                    </div>
+                    <div class="stat-value-box">
+                        <span class="stat-value">18</span>
+                        <span class="stat-unit">/ 22 일</span>
+                    </div>
+                    <div class="segments">
+                        <div class="segment fill"></div>
+                        <div class="segment fill"></div>
+                        <div class="segment fill"></div>
+                        <div class="segment"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Manager Insight -->
+            <div class="card insight-card">
+                <div class="insight-left">
+                    <div class="insight-badge">
+                        <span class="material-symbols-outlined"
+                            style="color: var(--inverse-primary); font-variation-settings: 'FILL' 1;">star</span>
+                        <span>관리자 인사이트</span>
+                    </div>
+                    <h3 class="insight-title">경영진 관리 감독</h3>
+                    <p class="insight-desc">팀 휴가 승인 및 인력 계획에 대한 즉각적인 주의가 필요합니다.</p>
+                </div>
+                <div class="insight-right">
+                    <div class="mini-stat">
+                        <p class="mini-val">3</p>
+                        <p class="mini-label">대기 중인 요청</p>
+                    </div>
+                    <div class="mini-stat">
+                        <p class="mini-val">1</p>
+                        <p class="mini-label">오늘 부재중</p>
+                    </div>
+                    <button class="circle-btn">
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Recent Activity -->
+            <div class="card history-card">
+                <div class="history-header">
+                    <div class="history-title-box">
+                        <h3>최근 활동</h3>
+                        <p>최근 5영업일 기준</p>
+                    </div>
+                    <button class="text-link">모든 로그 보기</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>출근</th>
+                                <th>퇴근</th>
+                                <th>근무 시간</th>
+                                <th class="align-right">상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2023. 10. 23</td>
+                                <td>09:02 AM</td>
+                                <td>06:15 PM</td>
+                                <td>9시간 13분</td>
+                                <td class="align-right"><span class="tag tag-normal">정상</span></td>
+                            </tr>
+                            <tr>
+                                <td>2023. 10. 20</td>
+                                <td>08:55 AM</td>
+                                <td>05:40 PM</td>
+                                <td>8시간 45분</td>
+                                <td class="align-right"><span class="tag tag-normal">정상</span></td>
+                            </tr>
+                            <tr>
+                                <td>2023. 10. 19</td>
+                                <td>09:10 AM</td>
+                                <td>07:20 PM</td>
+                                <td>10시간 10분</td>
+                                <td class="align-right"><span class="tag tag-extra">연장</span></td>
+                            </tr>
+                            <tr>
+                                <td>2023. 10. 18</td>
+                                <td>09:05 AM</td>
+                                <td>06:05 PM</td>
+                                <td>9시간 00분</td>
+                                <td class="align-right"><span class="tag tag-normal">정상</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- FAB -->
+    <button class="fab">
+        <span class="material-symbols-outlined">add</span>
+    </button>
+</body>
+
+</html>
