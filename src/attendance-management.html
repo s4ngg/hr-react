@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>근태 관리 (Vanilla CSS) | Architect Ledger HR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./attendance-management.css">
+</head>
+
+<body>
+    <!-- SideNavBar -->
+    <aside>
+        <div class="sidebar-header">
+            <h2>관리자 포털</h2>
+            <p>글로벌 인사 시스템</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-link" href="./dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-sm">대시보드</span>
+            </a>
+            <a class="nav-link" href="./employee-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="text-sm">직원 관리</span>
+            </a>
+            <a class="nav-link" href="./department-management.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="text-sm">부서 관리</span>
+            </a>
+            <a class="nav-link active" href="./attendance-management.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="text-sm">근태 관리</span>
+            </a>
+            <a class="nav-link" href="./vacation-management.html">
+                <span class="material-symbols-outlined">event_busy</span>
+                <span class="text-sm">휴가 관리</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-check-in">출근하기</button>
+            <a class="footer-link" href="help.html">
+                <span class="material-symbols-outlined" style="font-size: 18px;">help</span>
+                고객 센터
+            </a>
+            <a class="footer-link logout" href="logout.html">
+                <span class="material-symbols-outlined" style="font-size: 18px;">logout</span>
+                로그아웃
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main>
+        <!-- TopNavBar -->
+        <header>
+            <div class="header-left">
+                <h1>Architect Ledger HR</h1>
+                <div class="divider"></div>
+                <div class="search-container">
+                    <span class="material-symbols-outlined" style="font-size: 18px; color: #94a3b8;">search</span>
+                    <input placeholder="기록 검색..." type="text" />
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="notif-btn">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="notif-dot"></span>
+                </button>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <p class="user-name">Alex Strathmore</p>
+                        <p class="user-role">수석 설계사</p>
+                    </div>
+                    <img alt="HR 관리자 프로필" class="profile-img"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDthuCuE0YEt8wDL3qnx_0JXAlVAvH6yoUL98zOlxc6Vv779P2_Vl8mti5aWmiSLm3nFjGgB0anEXUxI7c6RHryX6ZJeJTZsHoBsZOw10wAeSs01zVZrfpGW7wtoFRFPS7Ne5cO8jOLWJrP9Dx_kIubNYs3pLMQF5JVW3yOQivKaYshvop4MIZUbU-MDG7v0cduSu-f3G_zB06KFmbCRjuEtrElyxKtEa76ccGOPycJuiZfKIpTcBcAmjAGDbW107KoMdQLNvZEFi0L" />
+                </div>
+            </div>
+        </header>
+        <!-- Page Content -->
+        <div class="content-canvas">
+            <!-- Header Section -->
+            <div class="page-header">
+                <h2>근태 현황 개요</h2>
+                <p><span class="text-primary">2023년 10월</span> 인력 현황 및 근태 성실도를 모니터링합니다.</p>
+            </div>
+            <!-- Stats Bento Grid -->
+            <div class="stats-grid">
+                <!-- Present Card -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="icon-box blue">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        </div>
+                        <span class="trend-badge trend-up">+2.4%</span>
+                    </div>
+                    <div>
+                        <p class="stat-value">22 <span class="stat-unit">일</span></p>
+                        <p class="stat-label">이번 달 출근 일수</p>
+                    </div>
+                </div>
+                <!-- Late Card -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="icon-box orange">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">schedule</span>
+                        </div>
+                        <span class="trend-badge trend-down">-12%</span>
+                    </div>
+                    <div>
+                        <p class="stat-value">03 <span class="stat-unit">일</span></p>
+                        <p class="stat-label">지각 횟수</p>
+                    </div>
+                </div>
+                <!-- Absent Card -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="icon-box red">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">cancel</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="stat-value">01 <span class="stat-unit">일</span></p>
+                        <p class="stat-label">총 결근 일수</p>
+                    </div>
+                </div>
+                <!-- Efficiency Card -->
+                <div class="stat-card featured">
+                    <div class="stat-header">
+                        <div class="icon-box glass">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="stat-value">94.8%</p>
+                        <p class="stat-label">근태 점수</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Table Section -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div>
+                        <h3>상세 근태 로그</h3>
+                        <p>현재 정산 주기의 이력 데이터입니다.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-outline">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">filter_list</span>
+                            필터
+                        </button>
+                        <button class="btn-dark">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">download</span>
+                            PDF 내보내기
+                        </button>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>출근 시각</th>
+                                <th>퇴근 시각</th>
+                                <th>근무 시간</th>
+                                <th class="text-center">상태</th>
+                                <th class="text-right">관리</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="date-cell">
+                                        <span class="date-primary">2023년 10월 24일</span>
+                                        <span class="date-secondary">목요일</span>
+                                    </div>
+                                </td>
+                                <td class="time-cell">08:54 AM</td>
+                                <td class="time-cell">06:12 PM</td>
+                                <td class="time-cell">9시간 18분</td>
+                                <td class="text-center">
+                                    <span class="status-badge status-normal">정상</span>
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn-icon">
+                                        <span class="material-symbols-outlined"
+                                            style="font-size: 18px;">more_vert</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="date-cell">
+                                        <span class="date-primary">2023년 10월 23일</span>
+                                        <span class="date-secondary">수요일</span>
+                                    </div>
+                                </td>
+                                <td class="time-cell">09:42 AM</td>
+                                <td class="time-cell">06:05 PM</td>
+                                <td class="time-cell">8시간 23분</td>
+                                <td class="text-center">
+                                    <span class="status-badge status-late">지각</span>
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn-icon">
+                                        <span class="material-symbols-outlined"
+                                            style="font-size: 18px;">more_vert</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="date-cell">
+                                        <span class="date-primary">2023년 10월 22일</span>
+                                        <span class="date-secondary">화요일</span>
+                                    </div>
+                                </td>
+                                <td class="time-cell">08:50 AM</td>
+                                <td class="time-cell">08:30 PM</td>
+                                <td class="time-cell">11시간 40분</td>
+                                <td class="text-center">
+                                    <span class="status-badge status-overtime">연장 근무</span>
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn-icon">
+                                        <span class="material-symbols-outlined"
+                                            style="font-size: 18px;">more_vert</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="date-cell">
+                                        <span class="date-primary">2023년 10월 21일</span>
+                                        <span class="date-secondary">월요일</span>
+                                    </div>
+                                </td>
+                                <td class="time-cell">08:58 AM</td>
+                                <td class="time-cell">06:00 PM</td>
+                                <td class="time-cell">9시간 02분</td>
+                                <td class="text-center">
+                                    <span class="status-badge status-normal">정상</span>
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn-icon">
+                                        <span class="material-symbols-outlined"
+                                            style="font-size: 18px;">more_vert</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="load-more-row">
+                                <td colspan="6">
+                                    <button class="btn-text">18개의 기록 더 보기</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Insights Section -->
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <span class="material-symbols-outlined" style="color: var(--primary);">info</span>
+                    <div class="insight-content">
+                        <h4>근태 추이</h4>
+                        <p>평균 출근 시각은 오전 8시 58분으로, 공식 시작 시간보다 2분 빠릅니다. 이번 달에 긍정적인 근무 시간 균형을 유지하고 있습니다.</p>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <span class="material-symbols-outlined" style="color: var(--tertiary-container);">lightbulb</span>
+                    <div class="insight-content">
+                        <h4>정책 업데이트</h4>
+                        <p>다음 주부터 연장 근무 승인은 근무 종료 후 24시간 이내에 기록되어야 합니다. 급여 정산의 정확성을 위해 기록을 확인해 주시기 바랍니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
