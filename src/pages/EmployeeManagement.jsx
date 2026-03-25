@@ -2,8 +2,21 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/dashboard.css?inline";
+import { useEffect, useState } from "react";
+import { getEmployeeList } from "../api/employeeApi";
 
 function EmployeeManagement() {
+        const [employeeList, setEmployeeList] = useState([]);
+
+    useEffect(() => {
+        const loadEmployeeList = async () => {
+            const data = await getEmployeeList();
+            setEmployeeList(data);
+        };
+
+        loadEmployeeList();
+    }, []);
+
     return (
         <>
             <Sidebar />
@@ -76,7 +89,7 @@ function EmployeeManagement() {
                         </div>
 
                         <div className="select-container">
-                            <select>
+                            <select defaultValue="">
                                 <option value="">상태: 전체</option>
                                 <option value="active">활성</option>
                                 <option value="inactive">비활성</option>
@@ -262,7 +275,7 @@ function EmployeeManagement() {
                         </div>
 
                         <div className="table-footer">
-                            <p className="footer-info">전체 1,248명 중 1~5번째 직원 표시 중</p>
+                            <p className="footer-info">전체 {employeeList.length}명 중 1~5번째 직원 표시 중</p>
                             <div className="pagination">
                                 <button className="page-btn">
                                     <span className="material-symbols-outlined">chevron_left</span>
