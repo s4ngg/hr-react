@@ -5,6 +5,7 @@ export const useDashboard = (memberId) => {
     return useQuery({
         queryKey: ['dashboard', memberId],
         queryFn: () => getDashboard(memberId),
-        enabled: !!memberId
+        enabled: !!memberId,
+        staleTime: 1000 * 60 * 5, // ✅ 5분간 캐시 유지 추가
     });
 };
