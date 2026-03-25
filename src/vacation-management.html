@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>휴가 관리 | Architect Ledger HR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./vacation-management.css">
+</head>
+
+<body>
+    <aside>
+        <div class="sidebar-header">
+            <h2>임원 포털</h2>
+            <p>글로벌 HR 시스템</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-link" href="./dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-sm">대시보드</span>
+            </a>
+            <a class="nav-link" href="./employee-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="text-sm">직원 관리</span>
+            </a>
+            <a class="nav-link" href="./department-management.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="text-sm">부서 관리</span>
+            </a>
+            <a class="nav-link" href="./attendance-management.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="text-sm">근태 관리</span>
+            </a>
+            <a class="nav-link active" href="./vacation-management.html">
+                <span class="material-symbols-outlined">event_busy</span>
+                <span class="text-sm">휴가 관리</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a class="footer-link" href="#">
+                <span class="material-symbols-outlined">help</span>
+                <span class="text-sm">고객 센터</span>
+            </a>
+            <a class="footer-link logout" href="#">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="text-sm">로그아웃</span>
+            </a>
+        </div>
+    </aside>
+    <main>
+        <header>
+            <div class="header-left">
+                <h1>Architect Ledger HR</h1>
+                <div class="divider"></div>
+                <span>휴가 관리</span>
+            </div>
+            <div class="header-right">
+                <button class="btn-apply">
+                    <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+                    휴가 신청
+                </button>
+                <button class="icon-btn">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <p class="name">Marcus Thorne</p>
+                        <p class="role">시니어 HR 리드</p>
+                    </div>
+                    <img alt="HR 관리자 프로필" class="avatar"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD95BqeXlHOWT74Uvf31YMSsO29us1TRkgpRe9U2v2nBqo6Eqjth_lG6K86t_tkjyCyqOFKWJorulwAFbBfQG-r8X0yV2JPPmijYVhnW_-4mMrpIWYcH7O9JpW6WFY_wvlxsBOdp5A4ICq6JvnVBLCE-GcS7fEnbyX9OYX4Zivga1E6mYzu1qCgUiEK5QTrQodE60_eYpqszA6GEObHY_kaCXLga_jQ8qpSg0IPoGLQfXvAWblHgUt70LAhSFW7pAwYU34kyc_4Fb_f" />
+                </div>
+            </div>
+        </header>
+        <div class="content-container">
+            <section class="summary-grid">
+                <div class="summary-card primary">
+                    <span class="material-symbols-outlined bg-icon">calendar_month</span>
+                    <p class="card-label">잔여 휴가</p>
+                    <h2 class="card-value">12.5</h2>
+                    <div class="card-footer">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">info</span>
+                        2024년 12월 31일까지 유효
+                    </div>
+                </div>
+                <div class="summary-card neutral">
+                    <span class="material-symbols-outlined bg-icon">event_repeat</span>
+                    <p class="card-label">사용 휴가</p>
+                    <h2 class="card-value">2.5</h2>
+                    <div class="card-footer">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">history</span>
+                        현재 회계 연도 기준
+                    </div>
+                </div>
+                <div class="summary-card tertiary">
+                    <span class="material-symbols-outlined bg-icon">pending_actions</span>
+                    <p class="card-label">승인 대기 중</p>
+                    <h2 class="card-value">3</h2>
+                    <div class="card-footer">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">timer</span>
+                        관리자 검토 대기 중
+                    </div>
+                </div>
+            </section>
+            <div class="main-layout">
+                <section>
+                    <div class="section-header">
+                        <h3 class="section-title">나의 휴가 이력</h3>
+                        <div class="header-actions">
+                            <button class="action-btn">
+                                <span class="material-symbols-outlined">filter_list</span>
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-symbols-outlined">download</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>휴가 종류</th>
+                                    <th>기간</th>
+                                    <th>일수</th>
+                                    <th style="text-align: right;">상태</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="type-cell">
+                                            <div class="type-icon blue">
+                                                <span class="material-symbols-outlined"
+                                                    style="font-size: 14px;">beach_access</span>
+                                            </div>
+                                            <span class="type-name">연차 휴가</span>
+                                        </div>
+                                    </td>
+                                    <td>2024년 10월 12일 - 10월 14일</td>
+                                    <td class="days-cell">3.0일</td>
+                                    <td style="text-align: right;">
+                                        <span class="status-badge approved">승인됨</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="type-cell">
+                                            <div class="type-icon red">
+                                                <span class="material-symbols-outlined"
+                                                    style="font-size: 14px;">medical_services</span>
+                                            </div>
+                                            <span class="type-name">병가</span>
+                                        </div>
+                                    </td>
+                                    <td>2024년 11월 02일 - 11월 02일</td>
+                                    <td class="days-cell">1.0일</td>
+                                    <td style="text-align: right;">
+                                        <span class="status-badge requested">요청됨</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="type-cell">
+                                            <div class="type-icon blue">
+                                                <span class="material-symbols-outlined"
+                                                    style="font-size: 14px;">beach_access</span>
+                                            </div>
+                                            <span class="type-name">연차 휴가</span>
+                                        </div>
+                                    </td>
+                                    <td>2024년 12월 20일 - 12월 30일</td>
+                                    <td class="days-cell">7.0일</td>
+                                    <td style="text-align: right;">
+                                        <span class="status-badge rejected">반려됨</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section>
+                    <div class="section-header" style="justify-content: flex-start; gap: 8px;">
+                        <span class="material-symbols-outlined" style="color: var(--primary);">verified_user</span>
+                        <h3 class="section-title">승인 대기열</h3>
+                    </div>
+                    <div class="queue-list">
+                        <div class="queue-item">
+                            <div class="team-member">
+                                <img alt="팀원 사진" class="team-avatar"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm_K93hoKl4Xlh2UumEz9oLB2VJY6-Z1toLOCL4nDFcrelXQPMX5wrMZ8JPUuKVhMDdv9n4YRaN4INXjJKsEhVjK1DCSeDgNt6cMqPQCuF3njUhWkQn8D-kL4Em0h_eTrS4Koc8rsOtqlIOmbL5vwHdunh922_-EwNZWfNVefeBpX9n8rKAOzbGOYcN-p6RLzX0T6i1dwURt1KnxIwfqrbAC_CSAb-5sQkRZ7lg5dmNJJYxFK0j4RyBDL94XoRnFAxi4Os-cdowpkX" />
+                                <div>
+                                    <p class="member-name">Julian Casablancas</p>
+                                    <p class="member-role">주니어 아키텍트</p>
+                                </div>
+                            </div>
+                            <div class="request-details">
+                                <div>
+                                    <p class="detail-label">종류</p>
+                                    <p class="detail-value">교육 휴가</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <p class="detail-label">기간</p>
+                                    <p class="detail-value">2일</p>
+                                </div>
+                            </div>
+                            <div class="action-grid">
+                                <button class="btn-reject">반려</button>
+                                <button class="btn-approve">승인</button>
+                            </div>
+                        </div>
+                        <div class="queue-item">
+                            <div class="team-member">
+                                <img alt="팀원 사진" class="team-avatar"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgnF0_jerlKmdAmyhfI0tcGk0-rid2atP-v7pwrqnYMGTLmYTcXoaGy8utyxH9QtcC5y2mZfr3qIdlWU2b-C8hLrnJO3Zd0XQi30Er5Jsoa0olqOH_diuZJOg9IryHFiBtIkfOBu7raGw0dWtUr5EINoIalnjgxslvK18Qjy5T7hbPpUw1mQXu3idwjn3RrFGKI7YqoSj7q8HcbFEXt_Ou1Vo738myXL6RuHoPfDBmlfOyDGB5TI6S_w71a9OajQYSQDkmMB_Yr5pt" />
+                                <div>
+                                    <p class="member-name">Elena Gilbert</p>
+                                    <p class="member-role">리드 디자이너</p>
+                                </div>
+                            </div>
+                            <div class="request-details">
+                                <div>
+                                    <p class="detail-label">종류</p>
+                                    <p class="detail-value">연차 휴가</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <p class="detail-label">기간</p>
+                                    <p class="detail-value">5일</p>
+                                </div>
+                            </div>
+                            <div class="action-grid">
+                                <button class="btn-reject">반려</button>
+                                <button class="btn-approve">승인</button>
+                            </div>
+                        </div>
+                        <button class="view-all-btn">모든 팀 요청 보기</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <footer>
+            <p class="footer-meta">시스템 버전 4.8.2 // 기업 장부 규정 준수</p>
+        </footer>
+    </main>
+</body>
+
+</html>
