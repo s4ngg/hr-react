@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getMemberList, searchMember } from "../api/memberApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMemberList } from "../query/memberQuery";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
@@ -14,12 +14,10 @@ function EmployeeManagement() {
     const queryClient = useQueryClient();
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10);
-
-    const { data, isLoading } = useQuery({
-        queryKey: ["members", searchKeyword, page, size],
-        queryFn: () => searchKeyword ? searchMember(searchKeyword, page, size) : getMemberList(page, size),
-    });
-    const members = data?.content ?? [];
+    const { data, isLoading } = useMemberList(searchKeyword, page, size);
+    const members = data?.content ?? [];  // ← 이 줄 추가!
+    const totalElements = data?.totalElements ?? 0;
+    const totalPages = data?.totalPages ?? 0;
 
     const filteredMembers = useMemo(() => {
         return members
@@ -219,7 +217,7 @@ function EmployeeManagement() {
                         </div>
                     </div>
                 </div>
-        </main >
+            </main >
         </>
     );
 }
