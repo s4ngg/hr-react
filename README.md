@@ -1,16 +1,159 @@
-# React + Vite
+# HR Management System (근태 & 인사 관리 시스템)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![React Router](https://img.shields.io/badge/React%20Router-6-CA4245?logo=reactrouter&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-State%20Management-000000)
+![TanStack Query](https://img.shields.io/badge/TanStack%20Query-Server%20State-FF4154?logo=reactquery&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-HTTP%20Client-5A29E4)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 프로젝트 소개
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+실무 환경을 고려하여 설계한 **근태 및 인사 관리 시스템**
 
-## Expanding the ESLint configuration
+- React 기반 SPA
+- 서버 상태 관리 (TanStack Query)
+- 클라이언트 상태 관리 (Zustand)
+- API 통신 분리 구조 (Axios)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 주요 기능
+
+- 로그인 / 인증
+- 직원 관리
+- 부서 관리
+- 근태 관리
+- 휴가 관리
+
+---
+
+## UI
+
+#### 로그인
+<details open>
+  <summary>화면 보기</summary>
+  
+  <p>
+    <img width="80%" src="https://github.com/user-attachments/assets/95b15bba-b3ed-4851-a9f2-349a05c5b8ac" />
+  </p>
+</details>
+
+#### 비밀번호 찾기
+<details open>
+  <summary>화면 보기</summary>
+  <p>
+    <img width="80%" src="https://github.com/user-attachments/assets/ddc4342d-b748-463e-80ac-9909fed8821c" />
+  </p>
+</details>
+
+#### 내 정보 수정
+<details open>
+  <summary>화면 보기</summary>
+  <p>
+    <img width="80%" src="https://github.com/user-attachments/assets/67869c34-cf63-49f2-a012-a7e2ab8215b9" />
+  </p>
+</details>
+
+#### 대시보드
+<details open>
+  <summary>화면 보기</summary>
+  
+  <p>
+    <img width="80%" src="https://github.com/user-attachments/assets/95f247bf-ad5d-43c2-8660-15666f139a64" />
+  </p>
+</details>
+
+#### 직원 관리
+<details open>
+  <summary>화면 보기</summary>
+  <p>
+    <img width="32%" alt="image" src="https://github.com/user-attachments/assets/817a1714-bee1-4af4-ba7e-1aecfa8eaecc" />
+    <img width="32%" alt="image" src="https://github.com/user-attachments/assets/44cbef49-e01e-43c8-8317-eb80577eb264" />
+    <img width="32%" alt="image" src="https://github.com/user-attachments/assets/e0251b1f-cddd-440a-aa9f-83e8575b94ff" />
+  </p>
+</details>
+
+#### 부서 관리
+
+<details open>
+  <summary>화면 보기</summary>
+  <p>
+    <img width="32%" src="https://github.com/user-attachments/assets/72866c56-b7e8-4640-a36d-c4bc4f753bff" />
+    <img width="32%" src="https://github.com/user-attachments/assets/577f29a3-e9bb-4343-92b3-9a35b046c237" />
+    <img width="32%" src="https://github.com/user-attachments/assets/582199c5-8602-4176-abef-18d939d909bc" />
+  </p>
+</details>
+
+#### 근태 관리
+<details open>
+  <summary>화면 보기</summary>
+  <p>
+    <img width="80%" src="https://github.com/user-attachments/assets/a71bdeab-4197-479e-871e-d5a432fbb671" />
+  </p>
+</details>
+
+#### 휴가 관리
+
+<details open>
+  <summary>화면 보기</summary>
+  <p>
+    <img width="46%" src="https://github.com/user-attachments/assets/b911a7c9-8f7c-46c4-9630-3f118c81d703" />
+    <img width="46%" src="https://github.com/user-attachments/assets/0f8da12d-b869-41b0-8b30-40d189c937c6" />
+  </p>
+</details>
+
+#### IT 지원 문의
+<details open>
+  <summary>화면 보기</summary>
+  <p>
+    <img width="80%" src="https://github.com/user-attachments/assets/125d6285-7459-4987-8912-cc269f45eabc" />
+  </p>
+</details>
+
+---
+
+## 기술 스택
+
+### Front
+- React 18
+- react-router
+- zustand
+- Tanstack Query
+- Axios
+
+---
+
+## 로컬 실행 방법
+
+본 프로젝트는 데이터베이스 정보를 코드에 직접 작성하지 않고 환경 변수(Environment Variables)로 설정하여 사용합니다.
+
+프로젝트 실행 전에 아래 환경 변수를 반드시 설정해주세요.
+
+#### 필수 환경 변수
+
+- DB_URL
+- DB_USERNAME
+- DB_PASSWORD
+
+#### 예시
+
+DB_URL=jdbc:mysql://localhost:3306/cloud_project  
+DB_USERNAME=root  
+DB_PASSWORD=your_password  
+
+#### 주의사항
+
+환경 변수를 설정하지 않으면 프로젝트 실행 시 오류가 발생합니다.
+
+---
+
+## 팀원 및 역할
+| 이름 | 역할 | 기능 구현 |
+|------|------|------|
+| 김상우 ([s4ngg](https://github.com/s4ngg)) | 팀장 | CICD 파이프라인 구축, 대시보드 기능 구현(예시) |
+| 고유리 ([채울예정](https://github.com/채워주세요)) | 팀원 | 채울 예정 |
+| 이현재 ([TIG-korea](https://github.com/TIG-korea)) | 팀원 | EC2(MySQL) 서버 구축, 휴가 관리 및 로그인 기능 구현 |
+| 이영훈 ([Hello-pythworld](https://github.com/Hello-pythworld)) | 팀원 | S3 + CloudFront 구축, 직원 관리 및 근태 관리 기능 구현 |
