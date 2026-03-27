@@ -1,12 +1,12 @@
 import axios from "axios";
 import api from "./axios";
 
-const BASE_URL ='/api/vacations';
+const BASE_URL ='/vacations';
 
 
 // 휴가 신청
 export const getVacations = async (dto) => {
-    const res =await axios.post(BASE_URL, dto);
+    const res =await api.post(BASE_URL, dto);
     return res.data;
 }
 

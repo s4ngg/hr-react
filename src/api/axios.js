@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // baseURL : ''
-    headrs: {
+    baseURL : '/api',
+    headers: {
         'Content-Type': 'application/json',
     },
 });
@@ -15,7 +15,7 @@ api.interceptors.request.use(
 
         // 토큰이 존재하면 헤더에 Bearer 토큰 추가
         if (token) {
-            config.headrs.Authorization = `Bearer ${token}`;
+            config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
