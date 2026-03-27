@@ -1,7 +1,7 @@
 import axios from "axios";
 import api from "./axios";
 
-const BASE ='/api/vacations';
+const BASE_URL ='/api/vacations';
 
 
 // 휴가 신청
