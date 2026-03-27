@@ -2,8 +2,31 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/dashboard.css?inline";
+import { getMyVacationHistory } from "../api/vacationApi.js";
+import { useEffect, useState } from "react";
+
 
 function VacationManagement() {
+
+        const [history, setHistory] = useState([]);
+
+        
+        const fetchDate = async () => {
+            try{
+                const data = await getMyVacationHistory();
+                console.log("서버에서 온 데이터:", res);
+                setHistory(data || data.data); 
+            }catch(error){
+                console.error("데이터 로딩 실패",error)
+                setHistory([]); // 에러시 빈 배열로
+            }
+        };
+        
+        useEffect(() => {
+            fetchDate();
+        }, []);
+        
+
     return (
         <>
             <Sidebar />
@@ -109,110 +132,14 @@ function VacationManagement() {
                                     </thead>
 
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div className="type-cell">
-                                                    <div className="type-icon blue">
-                                                        <span
-                                                            className="material-symbols-outlined"
-                                                            style={{ fontSize: "14px" }}
-                                                        >
-                                                            beach_access
-                                                        </span>
-                                                    </div>
-                                                    <span className="type-name">연차 휴가</span>
-                                                </div>
-                                            </td>
-                                            <td>2024년 10월 12일 - 10월 14일</td>
-                                            <td className="days-cell">3.0일</td>
-                                            <td style={{ textAlign: "right" }}>
-                                                <span className="status-badge approved">승인됨</span>
-                                            </td>
+                                        {history.map((item) => (
+                                        <tr key={item.id}>
+                                            <td>{item.type}</td>
+                                            <td>{item.startDate} ~ {item.endDate}</td>
+                                            <td>{item.days}일</td>
+                                            <td>{item.status}</td>
                                         </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div className="type-cell">
-                                                    <div className="type-icon red">
-                                                        <span
-                                                            className="material-symbols-outlined"
-                                                            style={{ fontSize: "14px" }}
-                                                        >
-                                                            medical_services
-                                                        </span>
-                                                    </div>
-                                                    <span className="type-name">병가</span>
-                                                </div>
-                                            </td>
-                                            <td>2024년 11월 02일 - 11월 02일</td>
-                                            <td className="days-cell">1.0일</td>
-                                            <td style={{ textAlign: "right" }}>
-                                                <span className="status-badge requested">요청됨</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div className="type-cell">
-                                                    <div className="type-icon blue">
-                                                        <span
-                                                            className="material-symbols-outlined"
-                                                            style={{ fontSize: "14px" }}
-                                                        >
-                                                            beach_access
-                                                        </span>
-                                                    </div>
-                                                    <span className="type-name">연차 휴가</span>
-                                                </div>
-                                            </td>
-                                            <td>2024년 12월 20일 - 12월 30일</td>
-                                            <td className="days-cell">7.0일</td>
-                                            <td style={{ textAlign: "right" }}>
-                                                <span className="status-badge rejected">반려됨</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div className="type-cell">
-                                                    <div className="type-icon blue">
-                                                        <span
-                                                            className="material-symbols-outlined"
-                                                            style={{ fontSize: "14px" }}
-                                                        >
-                                                            beach_access
-                                                        </span>
-                                                    </div>
-                                                    <span className="type-name">연차 휴가</span>
-                                                </div>
-                                            </td>
-                                            <td>2024년 12월 20일 - 12월 30일</td>
-                                            <td className="days-cell">7.0일</td>
-                                            <td style={{ textAlign: "right" }}>
-                                                <span className="status-badge rejected">반려됨</span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div className="type-cell">
-                                                    <div className="type-icon blue">
-                                                        <span
-                                                            className="material-symbols-outlined"
-                                                            style={{ fontSize: "14px" }}
-                                                        >
-                                                            beach_access
-                                                        </span>
-                                                    </div>
-                                                    <span className="type-name">연차 휴가</span>
-                                                </div>
-                                            </td>
-                                            <td>2024년 12월 20일 - 12월 30일</td>
-                                            <td className="days-cell">7.0일</td>
-                                            <td style={{ textAlign: "right" }}>
-                                                <span className="status-badge rejected">반려됨</span>
-                                            </td>
-                                        </tr>
+                                        ))}
                                     </tbody>
                                 </table>
 
