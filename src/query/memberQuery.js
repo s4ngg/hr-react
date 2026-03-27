@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getMemberList, searchMember } from "../api/memberApi";
 
 // 전체 직원 조회 (페이징)

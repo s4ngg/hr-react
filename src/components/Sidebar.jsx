@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-function Sidebar() {
+
+function Sidebar({ checkInLabel = "체크인" }) {
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
@@ -34,36 +35,24 @@ function Sidebar() {
                     <span className="material-symbols-outlined">event_busy</span>
                     <span className="text-sm">휴가 관리</span>
                 </Link>
-                <div className="nav-item">
-                    <Link className="nav-link" to="/member-edit">
-                        <span className="material-symbols-outlined">settings</span>내 정보 수정
-                    </Link>
-                </div>
+                <Link className="nav-link" to="/member-edit">
+                    <span className="material-symbols-outlined">settings</span>
+                    <span className="text-sm">내 정보 수정</span>
+                </Link>
             </nav>
             <div className="sidebar-footer">
-
-
-
-                {/* 🔥 여기 추가 */}
-                <button className="checkin-btn">
-                    체크인
-                </button>
-                {/* 👇 여기 추가 */}
-                <div className="sidebar-footer">
-                    <Link className="nav-link" to="/it-contact">
-                        <span className="material-symbols-outlined">help</span>
-                        문의 하기
-                    </Link>
-
-                    <Link className="nav-link logout" to="/login">
-                        <span className="material-symbols-outlined">logout</span>
-                        로그아웃
-                    </Link>
-                </div>
-
-
+                <button className="btn-check-in">{checkInLabel}</button>
+                <Link className="nav-link" to="/it-contact">
+                    <span className="material-symbols-outlined">help</span>
+                    문의 하기
+                </Link>
+                <Link className="nav-link logout" to="/login">
+                    <span className="material-symbols-outlined">logout</span>
+                    로그아웃
+                </Link>
             </div>
         </aside>
-    )
+    );
 }
+
 export default Sidebar;

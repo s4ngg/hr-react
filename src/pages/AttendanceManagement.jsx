@@ -41,9 +41,19 @@ function AttendanceManagement() {
 
     useEffect(() => { fetchAttendances(); }, []);
 
+    const today = new Date();
+    const thisMonth = today.toISOString().slice(0, 7);
+    const thisMonthData = attendances.filter(a => a.workDate?.startsWith(thisMonth));
+    const workDays = thisMonthData.filter(a => a.checkIn).length;
+    const lateDays = thisMonthData.filter(a => a.status === 'LATE').length;
+    const absentDays = thisMonthData.filter(a => a.status === 'ABSENT').length;
+    const totalDays = thisMonthData.length;
+    const attendanceScore = totalDays > 0
+        ? ((workDays / totalDays) * 100).toFixed(1)
+        : 0;
     return (
         <>
-            <Sidebar />
+            <Sidebar checkInLabel="출근하기" />
             <Header />
             <main>
                 <div className="page-header">
@@ -53,46 +63,61 @@ function AttendanceManagement() {
                             <span style={{ color: "var(--outline-variant)" }}>/</span>
                             <span className="active-crumb">근태 관리</span>
                         </nav>
-                        <h1>근태 관리</h1>
-                        <p>직원들의 근태 관리 메뉴입니다.</p>
+                        <h1>근태 현황 개요</h1>
+                        <p>2023년 10월 인력 현황 및 근태 성실도를 모니터링합니다.</p>
                     </div>
                 </div>
                 <div className="content-canvas">
-
-                    {/* 출근/퇴근 버튼 카드 */}
-                    <div className="card attendance-card" style={{ marginBottom: "24px" }}>
-                        <div>
-                            <div className="card-label-row">
-                                <span className="card-label">근태 현황</span>
-                                <div className="status-badge">
-                                    <span className="dot" />
-                                    {todayAttendance ? (todayAttendance.checkOut ? "퇴근" : "출근중") : "미출근"}
+                    <div className="stats-grid">
+                        <div className="stat-card">
+                            <div className="stat-header">
+                                <div className="icon-box blue">
+                                    <span className="material-symbols-outlined"
+                                        style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                                </div>
+                                <span className="trend-badge trend-up">+2.4%</span>
+                            </div>
+                            <div>
+                                <p className="stat-value">22 <span className="stat-unit">일</span></p>
+                                <p className="stat-label">이번 달 출근 일수</p>
+                            </div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-header">
+                                <div className="icon-box orange">
+                                    <span className="material-symbols-outlined"
+                                        style={{ fontVariationSettings: "'FILL' 1" }}>schedule</span>
+                                </div>
+                                <span className="trend-badge trend-down">-12%</span>
+                            </div>
+                            <div>
+                                <p className="stat-value">03 <span className="stat-unit">회</span></p>
+                                <p className="stat-label">지각 횟수</p>
+                            </div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-header">
+                                <div className="icon-box red">
+                                    <span className="material-symbols-outlined"
+                                        style={{ fontVariationSettings: "'FILL' 1" }}>cancel</span>
                                 </div>
                             </div>
-                            <p className="time-display">
-                                {todayAttendance?.checkIn ?? "--:--"}
-                            </p>
-                            <p className="date-sub">
-                                {new Date().toLocaleDateString("ko-KR")}
-                            </p>
+                            <div>
+                                <p className="stat-value">01 <span className="stat-unit">일</span></p>
+                                <p className="stat-label">총 결근 일수</p>
+                            </div>
                         </div>
-                        <div className="btn-group">
-                            <button
-                                className={!todayAttendance ? "btn btn-primary" : "btn btn-disabled"}
-                                disabled={!!todayAttendance}
-                                onClick={handleCheckIn}
-                            >
-                                <span className="material-symbols-outlined">login</span>
-                                출근하기
-                            </button>
-                            <button
-                                className={todayAttendance && !todayAttendance.checkOut ? "btn btn-primary" : "btn btn-disabled"}
-                                disabled={!todayAttendance || !!todayAttendance.checkOut}
-                                onClick={handleCheckOut}
-                            >
-                                <span className="material-symbols-outlined">logout</span>
-                                퇴근하기
-                            </button>
+                        <div className="stat-card">
+                            <div className="stat-header">
+                                <div className="icon-box green">
+                                    <span className="material-symbols-outlined"
+                                        style={{ fontVariationSettings: "'FILL' 1" }}>leaderboard</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p className="stat-value">94.8 <span className="stat-unit">%</span></p>
+                                <p className="stat-label">근태 점수</p>
+                            </div>
                         </div>
                     </div>
 
@@ -100,8 +125,8 @@ function AttendanceManagement() {
                     <div className="table-container">
                         <div className="table-header">
                             <div>
-                                <h3>근태 이력</h3>
-                                <p>전체 근태 기록입니다.</p>
+                                <h3>상세 근태 로그</h3>
+                                <p>현재 정산 주기의 이력 데이터입니다.</p>
                             </div>
                         </div>
                         <div style={{ overflowX: "auto" }}>
@@ -130,10 +155,9 @@ function AttendanceManagement() {
                                                 <td className="time-cell">{a.checkOut ?? '-'}</td>
                                                 <td className="time-cell">{a.workHours ? `${a.workHours}시간` : '-'}</td>
                                                 <td className="text-center">
-                                                    <span className={`status-badge status-${
-                                                        a.status === '정상' ? 'normal' :
-                                                        a.status === '지각' ? 'late' : 'overtime'
-                                                    }`}>{a.status ?? '-'}</span>
+                                                    <span className={`status-badge status-${a.status === '정상' ? 'normal' :
+                                                            a.status === '지각' ? 'late' : 'overtime'
+                                                        }`}>{a.status ?? '-'}</span>
                                                 </td>
                                             </tr>
                                         ))
