@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE = '/api/dashboard';
+const BASE_URL = '/api/dashboard';
 
 export const getDashboard = async (memberId) => {
     const res = await axios.get(`${BASE_URL}/${memberId}`);
