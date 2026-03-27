@@ -1,8 +1,47 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/login.css?inline";
+import { useState } from "react";
+import api from "../api/axios";
+
 
 function Login() {
+    const navaigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        login_id: "",
+        password: ""
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+                [e.target.name]: e.target.value
+            });
+    }
+    
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try{
+            // 백엔드 로그인 api 호출
+            const response = await api.post("/login", {
+            loginId: formData.login_id, 
+            password: formData.password
+        });
+
+        const token = response.data.accessToken;
+
+        if(token){
+            localStorage.setItem("accessToken", token);
+            alert("로그인 성공");
+            navaigate("/api/dashboard");  // api 공통 인스턴스 사용에 따라 추후 /dashboard로 변경해야함 
+        }
+    } catch(error) {
+        alert("아이디 또는 비밀번호를 확인하세요.");
+    }
+};
+    
+    
     return (
         <>
             <div className="main-wrapper">
