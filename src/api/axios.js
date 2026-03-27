@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useAuthStore from '../../store/authStore';
 
 const api = axios.create({
     baseURL : '/api',
@@ -10,10 +11,9 @@ const api = axios.create({
 // 요청 인터셉터 : 모든 API 호출 전 실행
 api.interceptors.request.use(
     (config) => {
-        // 로컬 스토리지에서 토큰 꺼냄
-        const token = localStorage.getItem('accessToken');
+        const token = useAuthStore.getState().accessToken;
 
-        // 토큰이 존재하면 헤더에 Bearer 토큰 추가
+        
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
