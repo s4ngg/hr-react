@@ -11,19 +11,16 @@ function VacationManagement() {
         const [history, setHistory] = useState([]);
 
         
-        const fetchDate = async () => {
+        useEffect(() => {
+        const fetchVacationHistory = async () => {
             try{
-                const data = await getMyVacationHistory();
-                console.log("서버에서 온 데이터:", res);
-                setHistory(data || data.data); 
+                const res = await getMyVacationHistory();
+                setHistory(res.data); 
             }catch(error){
-                console.error("데이터 로딩 실패",error)
                 setHistory([]); // 에러시 빈 배열로
             }
         };
-        
-        useEffect(() => {
-            fetchDate();
+            fetchVacationHistory();
         }, []);
         
 
@@ -133,7 +130,7 @@ function VacationManagement() {
 
                                     <tbody>
                                         {history.map((item) => (
-                                        <tr key={item.id}>
+                                        <tr key={item.vacationId}>
                                             <td>{item.type}</td>
                                             <td>{item.startDate} ~ {item.endDate}</td>
                                             <td>{item.days}일</td>
