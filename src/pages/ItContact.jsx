@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/it-contact.css?inline";
+import { useItContact } from "../hooks/useItContact";
 
 function ItContact() {
+    const { form, isPending, handleChange, handleSubmit } = useItContact();
+
     return (
         <>
             <div className="app-container">
@@ -19,83 +22,83 @@ function ItContact() {
                         <div className="grid-layout">
                             <div className="form-section">
                                 <div className="form-card">
-                                    <form onSubmit={(e) => e.preventDefault()}>
+                                    <form onSubmit={handleSubmit}>
                                         <div className="form-grid">
                                             <div className="form-group">
-                                                <label className="label" htmlFor="name">
-                                                    이름
-                                                </label>
+                                                <label className="label" htmlFor="name">이름</label>
                                                 <input
                                                     className="input"
                                                     id="name"
                                                     placeholder="홍길동"
                                                     type="text"
+                                                    value={form.name}
+                                                    onChange={handleChange}
                                                 />
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="label" htmlFor="dept">
-                                                    부서
-                                                </label>
+                                                <label className="label" htmlFor="dept">부서</label>
                                                 <input
                                                     className="input"
                                                     id="dept"
                                                     placeholder="개발팀 / 인사팀"
                                                     type="text"
+                                                    value={form.dept}
+                                                    onChange={handleChange}
                                                 />
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="label" htmlFor="contact">
-                                                    연락처
-                                                </label>
+                                                <label className="label" htmlFor="contact">연락처</label>
                                                 <input
                                                     className="input"
                                                     id="contact"
                                                     placeholder="010-0000-0000"
                                                     type="tel"
+                                                    value={form.contact}
+                                                    onChange={handleChange}
                                                 />
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="label" htmlFor="email">
-                                                    이메일
-                                                </label>
+                                                <label className="label" htmlFor="email">이메일</label>
                                                 <input
                                                     className="input"
                                                     id="email"
                                                     placeholder="example@nexuspro.com"
                                                     type="email"
+                                                    value={form.email}
+                                                    onChange={handleChange}
                                                 />
                                             </div>
 
                                             <div className="form-group full-width">
-                                                <label className="label" htmlFor="subject">
-                                                    제목
-                                                </label>
+                                                <label className="label" htmlFor="subject">제목</label>
                                                 <input
                                                     className="input"
                                                     id="subject"
                                                     placeholder="요청 사항의 핵심 내용을 입력하세요"
                                                     type="text"
+                                                    value={form.subject}
+                                                    onChange={handleChange}
                                                 />
                                             </div>
 
                                             <div className="form-group full-width">
-                                                <label className="label" htmlFor="message">
-                                                    내용
-                                                </label>
+                                                <label className="label" htmlFor="message">내용</label>
                                                 <textarea
                                                     className="textarea"
                                                     id="message"
                                                     placeholder="상세한 문제 상황을 입력해 주세요. (예: 시스템 오류 코드, 하드웨어 증상 등)"
+                                                    value={form.message}
+                                                    onChange={handleChange}
                                                 ></textarea>
                                             </div>
                                         </div>
 
-                                        <button className="btn-submit" type="submit">
+                                        <button className="btn-submit" type="submit" disabled={isPending}>
                                             <span className="material-symbols-outlined">send</span>
-                                            문의하기
+                                            {isPending ? "접수 중..." : "문의하기"}
                                         </button>
 
                                         <div className="card-footer">
@@ -114,7 +117,6 @@ function ItContact() {
                                         시스템 전면 중단 등 업무에 즉각적인 지장이 있는 경우 내선 번호로
                                         바로 연락 주시기 바랍니다.
                                     </p>
-
                                     <div className="phone-box">
                                         <span className="material-symbols-outlined phone-icon">
                                             phone_in_talk
@@ -124,7 +126,6 @@ function ItContact() {
                                             <div className="phone-number">8200-1111</div>
                                         </div>
                                     </div>
-
                                     <span className="material-symbols-outlined urgent-bg-icon">
                                         engineering
                                     </span>
@@ -137,9 +138,7 @@ function ItContact() {
                                     />
                                     <div className="image-overlay">
                                         <div className="image-title">IT Operations Center</div>
-                                        <div className="image-subtitle">
-                                            평일 09:00 - 18:00 (KST)
-                                        </div>
+                                        <div className="image-subtitle">평일 09:00 - 18:00 (KST)</div>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +147,7 @@ function ItContact() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default withPageStyle(ItContact, "it-contact.css", pageCss);
