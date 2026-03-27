@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/dashboard.css?inline";
+import { deleteMember } from "../api/memberApi";
 
 function EmployeeManagement() {
     const [searchName, setSearchName] = useState('');

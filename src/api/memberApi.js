@@ -25,3 +25,12 @@ export const updateMember = async (memberId, dto) => {
     const res = await axios.put(`${BASE_URL}/${memberId}`, dto);
     return res.data;
 };
+
+// memberApi.js에 추가
+export const deleteMember = async (memberId) => {
+    const response = await fetch(`/api/members/${memberId}`, {
+        method: "DELETE",
+    });
+    if (!response.ok) throw new Error("삭제 실패");
+    return response.json();
+};
