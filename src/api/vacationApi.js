@@ -1,5 +1,4 @@
-import axios from "axios";
-import api from "./axios";
+import api from "./instance";
 
 const BASE_URL ='/vacations';
 
