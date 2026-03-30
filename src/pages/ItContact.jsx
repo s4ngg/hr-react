@@ -2,10 +2,19 @@ import { Link } from "react-router-dom";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/it-contact.css?inline";
 import { useItContact } from "../hooks/useItContact";
+import { useEffect } from "react";
 
 function ItContact() {
-    const { form, isPending, handleChange, handleSubmit } = useItContact();
+    const { form, isPending, handleChange, handleSubmit, isSuccess, isError, error } = useItContact();
 
+    useEffect(() => {
+        if (isSuccess) alert("문의가 접수되었습니다.");
+    }, [isSuccess]);
+
+    useEffect(() => {
+        if (isError) alert(error?.response?.data?.message ?? "문의 접수 실패");
+    }, [isError]);
+    
     return (
         <>
             <div className="app-container">
