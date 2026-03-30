@@ -1,46 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/login.css?inline";
-import { useState } from "react";
-import api from "../api/axios";
+import { useLoginForm } from "../hooks/useLoginForm.js";
 
 
 function Login() {
-    const navaigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        login_id: "",
-        password: ""
-    });
-
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-                [e.target.name]: e.target.value
-            });
-    }
-    
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try{
-            // 백엔드 로그인 api 호출
-            const response = await api.post("/login", {
-            loginId: formData.login_id, 
-            password: formData.password
-        });
-
-        const token = response.data.accessToken;
-
-        if(token){
-            localStorage.setItem("accessToken", token);
-            alert("로그인 성공");
-            navaigate("/api/dashboard");  // api 공통 인스턴스 사용에 따라 추후 /dashboard로 변경해야함 
-        }
-    } catch(error) {
-        alert("아이디 또는 비밀번호를 확인하세요.");
-    }
-};
-    
+    const {formData, handleChange, handleChange} = useLoginForm
     
     return (
         <>
@@ -60,7 +26,7 @@ function Login() {
                     </div>
 
                     <div className="login-card">
-                        <form onSubmit={(e) => e.preventDefault()}>
+                        <form onSubmit={handleLogin}>
                             <div className="form-group">
                                 <div className="form-label-row">
                                     <label className="label-text" htmlFor="login_id">
@@ -80,6 +46,8 @@ function Login() {
                                         className="form-input"
                                         id="login_id"
                                         name="login_id"
+                                        value={formData.login_id}
+                                        onChange={handleChange}
                                         placeholder="사번 또는 이메일"
                                         type="text"
                                     />
