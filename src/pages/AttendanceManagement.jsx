@@ -142,26 +142,63 @@ function AttendanceManagement() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {attendances.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="6" style={{ textAlign: "center" }}>근태 기록이 없습니다.</td>
-                                        </tr>
-                                    ) : (
-                                        attendances.map((a) => (
-                                            <tr key={a.attendanceId}>
-                                                <td>{a.workDate}</td>
-                                                <td>{a.memberId}</td>
-                                                <td className="time-cell">{a.checkIn ?? '-'}</td>
-                                                <td className="time-cell">{a.checkOut ?? '-'}</td>
-                                                <td className="time-cell">{a.workHours ? `${a.workHours}시간` : '-'}</td>
-                                                <td className="text-center">
-                                                    <span className={`status-badge status-${a.status === '정상' ? 'normal' :
-                                                            a.status === '지각' ? 'late' : 'overtime'
-                                                        }`}>{a.status ?? '-'}</span>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
+                                    <tr>
+                                        <td>
+                                            <div className="date-cell">
+                                                <span className="date-primary">2026년 3월 27일</span>
+                                                <span className="date-secondary">목요일</span>
+                                            </div>
+                                        </td>
+                                        <td className="time-cell">08:54 AM</td>
+                                        <td className="time-cell">06:12 PM</td>
+                                        <td className="time-cell">9시간 18분</td>
+                                        <td className="text-center">
+                                            <span className="status-badge status-normal">정상</span>
+                                        </td>
+                                        <td className="text-right">
+                                            <button className="btn-icon">
+                                                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>more_vert</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div className="date-cell">
+                                                <span className="date-primary">2026년 3월 26일</span>
+                                                <span className="date-secondary">수요일</span>
+                                            </div>
+                                        </td>
+                                        <td className="time-cell">09:42 AM</td>
+                                        <td className="time-cell">06:05 PM</td>
+                                        <td className="time-cell">8시간 23분</td>
+                                        <td className="text-center">
+                                            <span className="status-badge status-late">지각</span>
+                                        </td>
+                                        <td className="text-right">
+                                            <button className="btn-icon">
+                                                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>more_vert</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div className="date-cell">
+                                                <span className="date-primary">2026년 3월 25일</span>
+                                                <span className="date-secondary">화요일</span>
+                                            </div>
+                                        </td>
+                                        <td className="time-cell">08:58 AM</td>
+                                        <td className="time-cell">06:00 PM</td>
+                                        <td className="time-cell">9시간 02분</td>
+                                        <td className="text-center">
+                                            <span className="status-badge status-normal">정상</span>
+                                        </td>
+                                        <td className="text-right">
+                                            <button className="btn-icon">
+                                                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>more_vert</span>
+                                            </button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

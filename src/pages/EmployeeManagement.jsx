@@ -85,6 +85,7 @@ function EmployeeManagement() {
                                 <option value="디자인">디자인</option>
                                 <option value="운영">운영</option>
                                 <option value="재무">재무</option>
+                                <option value="개발팀">개발팀</option>
                             </select>
                         </div>
                         <div className="select-container">
@@ -201,20 +202,20 @@ function EmployeeManagement() {
 
                     <div className="stats-grid" style={{ marginTop: "24px" }}>
                         <div className="stat-card primary">
-                            <p className="stat-label">총 직원 수</p>
-                            <p className="stat-value">{members.length}</p>
+                            <p className="stat-label">총 정규직</p>
+                            <p className="stat-value">1092</p>
                         </div>
                         <div className="stat-card secondary">
-                            <p className="stat-label">정규직</p>
-                            <p className="stat-value">{fullTime}</p>
+                            <p className="stat-label">계약직</p>
+                            <p className="stat-value">156</p>
                         </div>
                         <div className="stat-card tertiary">
-                            <p className="stat-label">계약직</p>
-                            <p className="stat-value">{partTime}</p>
+                            <p className="stat-label">평균 근속 연수</p>
+                            <p className="stat-value">4.2년</p>
                         </div>
                         <div className="stat-card success">
-                            <p className="stat-label">재직 중</p>
-                            <p className="stat-value">{members.filter(m => m.status === '재직').length}</p>
+                            <p className="stat-label">성장률 (3분기)</p>
+                            <p className="stat-value">12.4%</p>
                         </div>
                     </div>
                 </div>

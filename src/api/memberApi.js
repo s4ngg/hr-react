@@ -22,7 +22,7 @@ export const createMember = async (dto) => {
 
 // 직원 수정
 export const updateMember = async (memberId, dto) => {
-    const res = await axios.put(`${BASE_URL}/${memberId}`, dto);
+    const res = await axios.patch(`${BASE_URL}/${memberId}`, dto);
     return res.data;
 };
 
