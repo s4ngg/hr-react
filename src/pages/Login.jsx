@@ -6,7 +6,7 @@ import { useLoginForm } from "../hooks/useLoginForm.js";
 
 function Login() {
 
-    const {formData, handleChange, handleLogin} = useLoginForm
+    const {formData, handleChange, handleLogin} = useLoginForm();
     
     return (
         <>
