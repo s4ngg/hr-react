@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/login.css?inline";
+import { useLoginForm } from "../hooks/useLoginForm.js";
+
 
 function Login() {
+
+    const {formData, handleChange, handleChange} = useLoginForm
+    
     return (
         <>
             <div className="main-wrapper">
@@ -21,7 +26,7 @@ function Login() {
                     </div>
 
                     <div className="login-card">
-                        <form onSubmit={(e) => e.preventDefault()}>
+                        <form onSubmit={handleLogin}>
                             <div className="form-group">
                                 <div className="form-label-row">
                                     <label className="label-text" htmlFor="login_id">
@@ -41,6 +46,8 @@ function Login() {
                                         className="form-input"
                                         id="login_id"
                                         name="login_id"
+                                        value={formData.login_id}
+                                        onChange={handleChange}
                                         placeholder="사번 또는 이메일"
                                         type="text"
                                     />
