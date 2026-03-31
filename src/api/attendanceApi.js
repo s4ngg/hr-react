@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = '/attendances';
+const BASE_URL = '/api/attendances';
 
 // 전체 근태 조회
 export const getAllAttendances = async () => {
@@ -20,9 +20,9 @@ export const checkIn = async (memberId) => {
     return res.data;
 };
 
-// 퇴근 체크아웃 (body에 memberId 포함)
+// 퇴근 체크아웃
 export const checkOut = async (attendanceId, memberId) => {
-    const res = await axios.put(`${BASE_URL}/check-out/${attendanceId}`, { memberId });
+    const res = await axios.patch(`${BASE_URL}/check-out/${attendanceId}`, { memberId });
     return res.data;
 };
 
