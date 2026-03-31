@@ -17,11 +17,12 @@ export const useLoginMutation = () => {
         },
         onSuccess: (data) => {
             if (data.token) {
-                setAccessToken(data.token);
-                alert("로그인 성공!");
-                navigate("/dashboard");
-            }
-        },
+                    setAuth(data);
+                    navigate("/dashboard");
+                    return;
+                }
+                alert("로그인 응답에 토큰이 없습니다.")
+            },
         onError: (error) => {
             console.error("로그인 에러:", error);
             alert("아이디 또는 비밀번호를 확인하세요.");
