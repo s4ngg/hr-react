@@ -76,6 +76,8 @@ function Login() {
                                         className="form-input"
                                         id="password"
                                         name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
                                         placeholder="••••••••"
                                         type="password"
                                     />
