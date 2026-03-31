@@ -66,21 +66,25 @@ function Sidebar({ checkInLabel = "체크인" }) {
                 </NavLink>
             </nav>
 
-            <div className="sidebar-footer">
-                <button className="btn-check-in" type="button">
-                    {checkInLabel}
-                </button>
+<div className="sidebar-footer">
+    <button className="btn-check-in" type="button">
+        {checkInLabel}
+    </button>
 
-                <NavLink className={navClass} to="/it-contact">
-                    <span className="material-symbols-outlined">help</span>
-                    문의 하기
-                </NavLink>
+    <NavLink className={navClass} to="/it-contact">
+        <span className="material-symbols-outlined">help</span>
+        문의 하기
+    </NavLink>
 
-                <button type="button" className="nav-link logout" onClick={handleLogout}>
-                    <span className="material-symbols-outlined">logout</span>
-                    로그아웃
-                </button>
-            </div>
+    <button
+        type="button"
+        className="nav-link logout logout-btn"
+        onClick={handleLogout}
+    >
+        <span className="material-symbols-outlined">logout</span>
+        로그아웃
+    </button>
+</div>
         </aside>
     );
 }
