@@ -25,16 +25,16 @@ export const useLoginMutation = () => {
             setAuth(data);
 
             if (data.role === "ADMIN") {
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
                 return;
             }
 
             if (data.role === "USER") {
-                navigate("/attendance-management");
+                navigate("/attendance-management", { replace: true });
                 return;
             }
 
-            navigate("/login");
+            navigate("/login", { replace: true });
         },
 
         onError: (error) => {
