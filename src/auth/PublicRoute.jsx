@@ -10,7 +10,7 @@ function PublicRoute({ children }) {
     }
 
     if (accessToken && user?.role === "USER") {
-        return <Navigate to="/attendance-management" replace />;
+        return <Navigate to="/dashboard" replace />;
     }
 
     return children;

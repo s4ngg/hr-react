@@ -33,10 +33,6 @@ function Sidebar({ checkInLabel = "체크인" }) {
             <nav className="sidebar-nav">
                 {role === "ADMIN" && (
                     <>
-                        <NavLink className={navClass} to="/dashboard">
-                            <span className="material-symbols-outlined">dashboard</span>
-                            <span className="text-sm">대시보드</span>
-                        </NavLink>
 
                         <NavLink className={navClass} to="/employee-management">
                             <span className="material-symbols-outlined">group</span>
@@ -49,6 +45,10 @@ function Sidebar({ checkInLabel = "체크인" }) {
                         </NavLink>
                     </>
                 )}
+                        <NavLink className={navClass} to="/dashboard">
+                            <span className="material-symbols-outlined">dashboard</span>
+                            <span className="text-sm">대시보드</span>
+                        </NavLink>
 
                 <NavLink className={navClass} to="/attendance-management">
                     <span className="material-symbols-outlined">event_available</span>

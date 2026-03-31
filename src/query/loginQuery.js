@@ -30,7 +30,7 @@ export const useLoginMutation = () => {
             }
 
             if (data.role === "USER") {
-                navigate("/attendance-management", { replace: true });
+                navigate("/dashboard", { replace: true });
                 return;
             }
 
