@@ -22,11 +22,11 @@ export const useRequestVacation = (token) =>{
 
     mutationFn: async (vacationData) => {
     
-    const res = await api.post('/vacation', vacationData);
+    const res = await api.post('/vacations', vacationData);
     return res.data;
     },
     onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ['vacationHistory'] });
+    queryClient.invalidateQueries({ queryKey: ['myVacationHistory', memberId] });
     alert("휴가 신청이 완료되었습니다!");
     },
     onError: (error) => {
