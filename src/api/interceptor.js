@@ -1,6 +1,6 @@
 import { getAccessToken } from '../auth/tokenProvider';
 
-// 함수명은 참고만 해주세요.
+
 export const setupInterceptors = (api) => {
 
     // 요청 인터셉터

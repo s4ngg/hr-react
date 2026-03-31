@@ -1,5 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuthStore from "../../store/authStore";
+
+
 function Sidebar() {
+    const user = useAuthStore((state) => state.user);
+    const logout = useAuthStore((state) => state.logout);
+    const navigate = useNavigate();
+
+    const role = user?.role;
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
+
+
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
@@ -13,52 +29,60 @@ function Sidebar() {
                     </div>
                 </div>
             </div>
+
+
             <nav className="sidebar-nav">
-                <Link className="nav-link active" to="/dashboard">
-                    <span className="material-symbols-outlined">dashboard</span>
-                    <span className="text-sm">대시보드</span>
-                </Link>
-                <Link className="nav-link" to="/employee-management">
-                    <span className="material-symbols-outlined">group</span>
-                    <span className="text-sm">직원 관리</span>
-                </Link>
-                <Link className="nav-link" to="/department-management">
-                    <span className="material-symbols-outlined">domain</span>
-                    <span className="text-sm">부서 관리</span>
-                </Link>
+                {role === "ADMIN" && (
+                    <>
+                        <Link className="nav-link active" to="/dashboard">
+                            <span className="material-symbols-outlined">dashboard</span>
+                            <span className="text-sm">대시보드</span>
+                        </Link>
+
+                        <Link className="nav-link" to="/employee-management">
+                            <span className="material-symbols-outlined">group</span>
+                            <span className="text-sm">직원 관리</span>
+                        </Link>
+
+                        <Link className="nav-link" to="/department-management">
+                            <span className="material-symbols-outlined">domain</span>
+                            <span className="text-sm">부서 관리</span>
+                        </Link>
+                    </>
+                )}
+
                 <Link className="nav-link" to="/attendance-management">
                     <span className="material-symbols-outlined">event_available</span>
                     <span className="text-sm">근태 관리</span>
                 </Link>
+
                 <Link className="nav-link" to="/vacation-management">
                     <span className="material-symbols-outlined">event_busy</span>
                     <span className="text-sm">휴가 관리</span>
                 </Link>
+
                 <div className="nav-item">
                     <Link className="nav-link" to="/member-edit">
                         <span className="material-symbols-outlined">settings</span>내 정보 수정
                     </Link>
                 </div>
             </nav>
+
+
             <div className="sidebar-footer">
-
-
-
-                {/* 🔥 여기 추가 */}
                 <button className="checkin-btn">
                     체크인
                 </button>
-                {/* 👇 여기 추가 */}
                 <div className="sidebar-footer">
                     <Link className="nav-link" to="/it-contact">
                         <span className="material-symbols-outlined">help</span>
                         문의 하기
                     </Link>
 
-                    <Link className="nav-link logout" to="/login">
+                    <button type="button"className="nav-link logout" onClick={handleLogout}>
                         <span className="material-symbols-outlined">logout</span>
                         로그아웃
-                    </Link>
+                    </button>
                 </div>
 
 
