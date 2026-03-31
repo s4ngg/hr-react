@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard.jsx";
 import EmployeeManagement from "./pages/EmployeeManagement.jsx";
 import EmployeeCreate from "./pages/EmployeeCreate.jsx";
@@ -14,33 +14,123 @@ import MemberEdit from "./pages/MemberEdit.jsx";
 import Login from "./pages/Login.jsx";
 import FindPassword from "./pages/FindPassword.jsx";
 import ItContact from "./pages/ItContact.jsx";
+import ProtectedRoute from "./auth/ProtectedRoute.jsx";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* 기본 경로 */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
 
-        <Route path="/employee-management" element={<EmployeeManagement />} />
-        <Route path="/employee-create" element={<EmployeeCreate />} />
-        <Route path="/employee-edit" element={<EmployeeEdit />} />
-
-        <Route path="/department-management" element={<DepartmentManagement />} />
-        <Route path="/department-create" element={<DepartmentCreate />} />
-        <Route path="/department-edit/:departmentId" element={<DepartmentEdit />} />
-
-        <Route path="/attendance-management" element={<AttendanceManagement />} />
-
-        <Route path="/vacation-management" element={<VacationManagement />} />
-        <Route path="/vacation-request" element={<VacationRequest />} />
-        <Route path="/vacation-request-list" element={<VacationRequestList />} />
-
-        <Route path="/member-edit" element={<MemberEdit />} />
-
+        {/* 로그인 없이 접근 가능한 페이지 */}
         <Route path="/login" element={<Login />} />
         <Route path="/find-password" element={<FindPassword />} />
-        <Route path="/it-contact" element={<ItContact />} /> 
+        <Route path="/it-contact" element={<ItContact />} />
+
+        {/* ADMIN 전용 */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/employee-management"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <EmployeeManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employee-create"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <EmployeeCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employee-edit"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <EmployeeEdit />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/department-management"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <DepartmentManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/department-create"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <DepartmentCreate />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/department-edit/:departmentId"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <DepartmentEdit />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ADMIN, USER 공통 */}
+        <Route
+          path="/attendance-management"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "USER"]}>
+              <AttendanceManagement />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/vacation-management"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "USER"]}>
+              <VacationManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vacation-request"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "USER"]}>
+              <VacationRequest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vacation-request-list"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "USER"]}>
+              <VacationRequestList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/member-edit"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "USER"]}>
+              <MemberEdit />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
