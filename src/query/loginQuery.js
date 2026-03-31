@@ -16,8 +16,8 @@ export const useLoginMutation = () => {
             return response.data;
         },
         onSuccess: (data) => {
-            if (data.accessToken) {
-                setAccessToken(data.accessToken);
+            if (data.token) {
+                setAccessToken(data.token);
                 alert("로그인 성공!");
                 navigate("/dashboard");
             }
