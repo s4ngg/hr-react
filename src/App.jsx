@@ -15,20 +15,34 @@ import Login from "./pages/Login.jsx";
 import FindPassword from "./pages/FindPassword.jsx";
 import ItContact from "./pages/ItContact.jsx";
 import ProtectedRoute from "./auth/ProtectedRoute.jsx";
+import PublicRoute from "./auth/PublicRoute.jsx";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* 기본 경로 */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
-        {/* 로그인 없이 접근 가능한 페이지 */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/find-password" element={<FindPassword />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/find-password"
+          element={
+            <PublicRoute>
+              <FindPassword />
+            </PublicRoute>
+          }
+        />
+
         <Route path="/it-contact" element={<ItContact />} />
 
-        {/* ADMIN 전용 */}
         <Route
           path="/dashboard"
           element={
@@ -88,7 +102,6 @@ function App() {
           }
         />
 
-        {/* ADMIN, USER 공통 */}
         <Route
           path="/attendance-management"
           element={
@@ -122,7 +135,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/member-edit"
           element={
