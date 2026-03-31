@@ -1,21 +1,45 @@
-import { getAccessToken } from '../auth/tokenProvider';
+import { useMutation } from "@tanstack/react-query";
+import api from "../api/instance";
+import useAuthStore from "../store/authStore";
+import { useNavigate } from "react-router-dom";
 
+export const useLoginMutation = () => {
+    const navigate = useNavigate();
+    const setAuth = useAuthStore((state) => state.setAuth);
 
-export const setupInterceptors = (api) => {
+    return useMutation({
+        mutationFn: async (loginData) => {
+            const response = await api.post("/login", {
+                loginId: loginData.login_id,
+                password: loginData.password,
+            });
+            return response.data;
+        },
 
-    // 요청 인터셉터
-    api.interceptors.request.use(
-        (config) => {
-            const token = getAccessToken();
-
-            config.headers = config.headers ?? {};
-
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
+        onSuccess: (data) => {
+            if (!data.token) {
+                alert("로그인 응답에 토큰이 없습니다.");
+                return;
             }
 
-            return config;
+            setAuth(data);
+
+            if (data.role === "ADMIN") {
+                navigate("/dashboard", { replace: true });
+                return;
+            }
+
+            if (data.role === "USER") {
+                navigate("/attendance-management", { replace: true });
+                return;
+            }
+
+            navigate("/login", { replace: true });
         },
-        (error) => Promise.reject(error)
-    );
+
+        onError: (error) => {
+            console.error("로그인 에러:", error);
+            alert("아이디 또는 비밀번호를 확인하세요.");
+        },
+    });
 };
