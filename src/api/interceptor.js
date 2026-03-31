@@ -1,45 +1,31 @@
-import { useMutation } from "@tanstack/react-query";
-import api from "../api/instance";
+import { getAccessToken } from "../auth/tokenProvider";
 import useAuthStore from "../store/authStore";
-import { useNavigate } from "react-router-dom";
 
-export const useLoginMutation = () => {
-    const navigate = useNavigate();
-    const setAuth = useAuthStore((state) => state.setAuth);
+export const setupInterceptors = (api) => {
+    api.interceptors.request.use(
+        (config) => {
+            const token = getAccessToken();
 
-    return useMutation({
-        mutationFn: async (loginData) => {
-            const response = await api.post("/login", {
-                loginId: loginData.login_id,
-                password: loginData.password,
-            });
-            return response.data;
-        },
+            config.headers = config.headers ?? {};
 
-        onSuccess: (data) => {
-            if (!data.token) {
-                alert("로그인 응답에 토큰이 없습니다.");
-                return;
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
             }
 
-            setAuth(data);
+            return config;
+        },
+        (error) => Promise.reject(error)
+    );
 
-            if (data.role === "ADMIN") {
-                navigate("/dashboard", { replace: true });
-                return;
+    api.interceptors.response.use(
+        (response) => response,
+        (error) => {
+            if (error.response?.status === 401) {
+                useAuthStore.getState().logout();
+                window.location.href = "/login";
             }
 
-            if (data.role === "USER") {
-                navigate("/attendance-management", { replace: true });
-                return;
-            }
-
-            navigate("/login", { replace: true });
-        },
-
-        onError: (error) => {
-            console.error("로그인 에러:", error);
-            alert("아이디 또는 비밀번호를 확인하세요.");
-        },
-    });
+            return Promise.reject(error);
+        }
+    );
 };
