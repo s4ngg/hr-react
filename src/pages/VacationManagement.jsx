@@ -11,17 +11,7 @@ function VacationManagement() {
         const [history, setHistory] = useState([]);
 
         
-        useEffect(() => {
-        const fetchVacationHistory = async () => {
-            try{
-                const res = await getMyVacationHistory();
-                setHistory(res.data); 
-            }catch(error){
-                setHistory([]); // 에러시 빈 배열로
-            }
-        };
-            fetchVacationHistory();
-        }, []);
+
         
 
     return (
