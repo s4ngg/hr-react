@@ -2435,4 +2435,16 @@ footer {
     border-radius: 8px;
 }
 
+
+.logout-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font: inherit;
+
+    display: flex;          
+    align-items: center;    
+    gap: 8px; 
+}             
 /* Login */

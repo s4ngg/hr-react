@@ -1,9 +1,7 @@
-import { getAccessToken } from '../auth/tokenProvider';
+import { getAccessToken } from "../auth/tokenProvider";
+import useAuthStore from "../store/authStore";
 
-// 함수명은 참고만 해주세요.
 export const setupInterceptors = (api) => {
-
-    // 요청 인터셉터
     api.interceptors.request.use(
         (config) => {
             const token = getAccessToken();
@@ -17,5 +15,17 @@ export const setupInterceptors = (api) => {
             return config;
         },
         (error) => Promise.reject(error)
+    );
+
+    api.interceptors.response.use(
+        (response) => response,
+        (error) => {
+            if (error.response?.status === 401) {
+                useAuthStore.getState().logout();
+                window.location.href = "/login";
+            }
+
+            return Promise.reject(error);
+        }
     );
 };

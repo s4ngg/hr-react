@@ -1,11 +1,6 @@
 import { useState, useMemo } from "react";
-<<<<<<< HEAD
 import { useQuery } from "@tanstack/react-query";
 import { getMemberList, searchMember } from "../api/memberApi";
-=======
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useMemberList } from "../query/memberQuery";
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
@@ -15,7 +10,6 @@ import { deleteMember } from "../api/memberApi";
 function EmployeeManagement() {
     const [searchName, setSearchName] = useState('');
     const [searchKeyword, setSearchKeyword] = useState('');
-<<<<<<< HEAD
     const [filterStatus, setFilterStatus] = useState('');
     const [page, setPage] = useState(0);
     const size = 5;
@@ -34,44 +28,14 @@ function EmployeeManagement() {
     const filteredMembers = useMemo(() => {
         return members.filter(m => filterStatus ? m.status === filterStatus : true);
     }, [members, filterStatus]);
-=======
-    const [filterDept, setFilterDept] = useState('');
-    const [filterStatus, setFilterStatus] = useState('');
-    const queryClient = useQueryClient();
-    const [page, setPage] = useState(0);
-    const [size, setSize] = useState(10);
-    const { data, isLoading } = useMemberList(searchKeyword, page, size);
-    const members = data?.content ?? [];  // ← 이 줄 추가!
-    const totalElements = data?.totalElements ?? 0;
-    const totalPages = data?.totalPages ?? 0;
-
-    const filteredMembers = useMemo(() => {
-        return members
-            .filter(m => filterDept ? m.deptName === filterDept : true)
-            .filter(m => filterStatus ? m.status === filterStatus : true);
-    }, [members, filterDept, filterStatus]);
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
 
     const fullTime = members.filter(m => m.employType === '정규직').length;
     const partTime = members.filter(m => m.employType === '계약직').length;
 
-<<<<<<< HEAD
     const handleSearch = () => {
         setPage(0);
         setSearchKeyword(searchName);
     };
-=======
-    const deleteMutation = useMutation({
-        mutationFn: (memberId) => deleteMember(memberId),
-        onSuccess: () => {
-            alert("삭제 완료!");
-            queryClient.invalidateQueries({ queryKey: ["members"] });
-        },
-        onError: (e) => alert("삭제 실패: " + e.message),
-    });
-
-    const handleSearch = () => setSearchKeyword(searchName);
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
 
     return (
         <>
@@ -87,18 +51,9 @@ function EmployeeManagement() {
                                 <span className="active-crumb">직원 명부</span>
                             </nav>
                             <h1>직원 관리</h1>
-<<<<<<< HEAD
                             <p>전체 {totalElements}명 활성 인원 목록입니다.</p>
                         </div>
                         <button className="btn-add-employee" onClick={() => (window.location.href = "/employee-create")}>
-=======
-                            <p>전 세계 사업부의 {members.length}명 활성 인원 목록입니다.</p>
-                        </div>
-                        <button
-                            className="btn-add-employee"
-                            onClick={() => (window.location.href = "/employee-create")}
-                        >
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
                             <span className="material-symbols-outlined">person_add</span>
                             직원 추가
                         </button>
@@ -106,13 +61,7 @@ function EmployeeManagement() {
 
                     <div className="filter-grid">
                         <div className="search-container">
-<<<<<<< HEAD
                             <span className="material-symbols-outlined" style={{ color: "var(--on-surface-variant)" }}>search</span>
-=======
-                            <span className="material-symbols-outlined" style={{ color: "var(--on-surface-variant)" }}>
-                                search
-                            </span>
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
                             <input
                                 placeholder="직원 이름으로 검색..."
                                 type="text"
@@ -122,27 +71,10 @@ function EmployeeManagement() {
                             />
                         </div>
                         <div className="select-container">
-<<<<<<< HEAD
                             <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
                                 <option value="">상태: 전체</option>
                                 <option value="재직">재직</option>
                                 <option value="퇴직">퇴직</option>
-=======
-                            <select onChange={(e) => setFilterDept(e.target.value)} value={filterDept}>
-                                <option value="">모든 부서</option>
-                                <option value="엔지니어링">엔지니어링</option>
-                                <option value="디자인">디자인</option>
-                                <option value="운영">운영</option>
-                                <option value="재무">재무</option>
-                                <option value="개발팀">개발팀</option>
-                            </select>
-                        </div>
-                        <div className="select-container">
-                            <select onChange={(e) => setFilterStatus(e.target.value)} value={filterStatus}>
-                                <option value="">상태: 전체</option>
-                                <option value="재직">활성</option>
-                                <option value="퇴직">비활성</option>
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
                             </select>
                         </div>
                         <div className="filter-btn" onClick={handleSearch}>
@@ -165,15 +97,9 @@ function EmployeeManagement() {
                                 </thead>
                                 <tbody>
                                     {isLoading ? (
-<<<<<<< HEAD
                                         <tr><td colSpan={6} style={{ textAlign: "center" }}>로딩 중...</td></tr>
                                     ) : filteredMembers.length === 0 ? (
                                         <tr><td colSpan={6} style={{ textAlign: "center" }}>데이터가 없습니다.</td></tr>
-=======
-                                        <tr><td colSpan="6" style={{ textAlign: "center" }}>로딩 중...</td></tr>
-                                    ) : filteredMembers.length === 0 ? (
-                                        <tr><td colSpan="6" style={{ textAlign: "center" }}>직원이 없습니다.</td></tr>
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
                                     ) : (
                                         filteredMembers.map((m) => (
                                             <tr key={m.memberId}>
@@ -198,23 +124,9 @@ function EmployeeManagement() {
                                                     </div>
                                                 </td>
                                                 <td className="action-cell">
-<<<<<<< HEAD
                                                     <button className="btn-edit" onClick={() => (window.location.href = `/employee-edit/${m.memberId}`)}>
                                                         <span className="material-symbols-outlined">edit</span>
                                                     </button>
-=======
-                                                    <button className="btn-edit"
-                                                        onClick={() => (window.location.href = `/employee-edit/${m.memberId}`)}>
-                                                        <span className="material-symbols-outlined">edit</span>
-                                                    </button>
-                                                    <button className="btn-edit"
-                                                        onClick={() => {
-                                                            if (confirm("삭제하시겠습니까?"))
-                                                                deleteMutation.mutate(m.memberId);
-                                                        }}>
-                                                        <span className="material-symbols-outlined">delete</span>
-                                                    </button>
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
                                                 </td>
                                             </tr>
                                         ))
@@ -223,7 +135,6 @@ function EmployeeManagement() {
                             </table>
                         </div>
                         <div className="table-footer">
-<<<<<<< HEAD
                             <p className="footer-info">전체 {totalElements}명 중 {page * size + 1}~{Math.min((page + 1) * size, totalElements)}번째 직원 표시 중</p>
                             <div className="pagination">
                                 <button className="page-btn" onClick={() => setPage(p => Math.max(p - 1, 0))} disabled={page === 0}>
@@ -236,41 +147,6 @@ function EmployeeManagement() {
                                 ))}
                                 <button className="page-btn" onClick={() => setPage(p => Math.min(p + 1, totalPages - 1))} disabled={page === totalPages - 1}>
                                     <span className="material-symbols-outlined">chevron_right</span>
-=======
-                            <p className="footer-info">
-                                전체 {data?.totalElements ?? 0}명
-                            </p>
-
-                            <div style={{ display: "flex", gap: "8px" }}>
-                                {/* 이전 버튼 */}
-                                <button
-                                    disabled={page === 0}
-                                    onClick={() => setPage(page - 1)}
-                                >
-                                    {"<"}
-                                </button>
-
-                                {/* 페이지 번호 */}
-                                {Array.from({ length: data?.totalPages ?? 1 }).map((_, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => setPage(i)}
-                                        style={{
-                                            backgroundColor: page === i ? "#1976d2" : "",
-                                            color: page === i ? "white" : ""
-                                        }}
-                                    >
-                                        {i + 1}
-                                    </button>
-                                ))}
-
-                                {/* 다음 버튼 */}
-                                <button
-                                    disabled={page + 1 >= (data?.totalPages ?? 1)}
-                                    onClick={() => setPage(page + 1)}
-                                >
-                                    {">"}
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
                                 </button>
                             </div>
                         </div>
@@ -278,7 +154,6 @@ function EmployeeManagement() {
 
                     <div className="stats-grid" style={{ marginTop: "24px" }}>
                         <div className="stat-card primary">
-<<<<<<< HEAD
                             <p className="stat-label">총 직원 수</p>
                             <p className="stat-value">{totalElements}</p>
                         </div>
@@ -293,22 +168,6 @@ function EmployeeManagement() {
                         <div className="stat-card success">
                             <p className="stat-label">재직 중</p>
                             <p className="stat-value">{members.filter(m => m.status === '재직').length}</p>
-=======
-                            <p className="stat-label">총 정규직</p>
-                            <p className="stat-value">1092</p>
-                        </div>
-                        <div className="stat-card secondary">
-                            <p className="stat-label">계약직</p>
-                            <p className="stat-value">156</p>
-                        </div>
-                        <div className="stat-card tertiary">
-                            <p className="stat-label">평균 근속 연수</p>
-                            <p className="stat-value">4.2년</p>
-                        </div>
-                        <div className="stat-card success">
-                            <p className="stat-label">성장률 (3분기)</p>
-                            <p className="stat-value">12.4%</p>
->>>>>>> 77ac39d113ae760d1a8e04bc05ab8f1ed304c6cf
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,14 @@
+import useAuthStore from "../store/authStore";
+
+
+
+
+
 function Header() {
+    const user = useAuthStore((state) => state.user);
+
+
+
     return(
         <header className="topbar">
         <div className="topbar-left">
@@ -10,8 +20,8 @@ function Header() {
             </button>
             <div className="user-profile">
             <div className="user-info">
-                <p className="user-name">마커스 베리티</p>
-                <p className="user-role">수석 프로젝트 아키텍트 (팀장)</p>
+                <p className="user-name">{user?.name ?? "사용자"}</p>
+                <p className="user-role">{user?.role ?? ""}</p>
             </div>
             <img
                 alt="Profile"
