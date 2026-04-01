@@ -58,6 +58,12 @@ export const useUpdateVacationStatus = () => {
             queryClient.invalidateQueries({ queryKey: ["myVacationHistory"] });
         },
         onError: (error) => {
+            const message =
+                error?.response?.data?.message ||
+                error?.response?.data?.error ||
+                "휴가 상태 변경에 실패했습니다.";
+
+            alert(message);
             console.error("휴가 상태 변경 실패:", error);
         },
     });

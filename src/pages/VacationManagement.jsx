@@ -2,27 +2,36 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/dashboard.css?inline";
-import { getMyVacationHistory } from "../api/vacationApi.js";
-import { useEffect, useState } from "react";
+import { useVacationManagement } from "../hooks/useVacationManagement";
 
 
 function VacationManagement() {
 
-        const [history, setHistory] = useState([]);
+    const {
+        isAdmin,
+        history,
+        historyLoading,
+        historyError,
+        pendingVacations,
+        pendingLoading,
+        pendingError,
+        totalVacationDays,
+        usedVacationDays,
+        remainingVacationDays,
+        handleApprove,
+        handleReject,
+        goToVacationRequest,
+        goToVacationRequestList,
+    } = useVacationManagement();
 
-        
-        useEffect(() => {
-        const fetchVacationHistory = async () => {
-            try{
-                const res = await getMyVacationHistory();
-                setHistory(res.data); 
-            }catch(error){
-                setHistory([]); // 에러시 빈 배열로
-            }
-        };
-            fetchVacationHistory();
-        }, []);
-        
+
+
+
+
+
+
+
+
 
     return (
         <>
@@ -44,7 +53,7 @@ function VacationManagement() {
                     <div className="btn-group">
                         <button
                             className="btn btn-primary"
-                            onClick={() => (window.location.href = "/vacation-request")}
+                            onClick={goToVacationRequest}
                         >
                             <span
                                 className="material-symbols-outlined"
@@ -64,7 +73,7 @@ function VacationManagement() {
                                 calendar_month
                             </span>
                             <p className="card-label">잔여 휴가</p>
-                            <h2 className="card-value">12.5</h2>
+                            <h2 className="card-value">{remainingVacationDays}</h2>
                             <div className="card-footer">
                                 <span
                                     className="material-symbols-outlined"
@@ -81,7 +90,7 @@ function VacationManagement() {
                                 event_repeat
                             </span>
                             <p className="card-label">사용 휴가</p>
-                            <h2 className="card-value">2.5</h2>
+                            <h2 className="card-value">{usedVacationDays}</h2>
                             <div className="card-footer">
                                 <span
                                     className="material-symbols-outlined"
@@ -89,26 +98,28 @@ function VacationManagement() {
                                 >
                                     history
                                 </span>
-                                현재 회계 연도 기준
+                                승인 완료 기준
                             </div>
                         </div>
 
-                        <div className="summary-card tertiary">
-                            <span className="material-symbols-outlined bg-icon">
-                                pending_actions
-                            </span>
-                            <p className="card-label">승인 대기 중</p>
-                            <h2 className="card-value">3</h2>
-                            <div className="card-footer">
-                                <span
-                                    className="material-symbols-outlined"
-                                    style={{ fontSize: "14px" }}
-                                >
-                                    timer
+                        {isAdmin && (
+                            <div className="summary-card tertiary">
+                                <span className="material-symbols-outlined bg-icon">
+                                    pending_actions
                                 </span>
-                                관리자 검토 대기 중
+                                <p className="card-label">승인 대기 중</p>
+                                <h2 className="card-value">{pendingVacations.length}</h2>
+                                <div className="card-footer">
+                                    <span
+                                        className="material-symbols-outlined"
+                                        style={{ fontSize: "14px" }}
+                                    >
+                                        timer
+                                    </span>
+                                    관리자 검토 대기 중
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </section>
 
                     <div className="main-layout">
@@ -129,140 +140,132 @@ function VacationManagement() {
                                     </thead>
 
                                     <tbody>
-                                        {history.map((item) => (
-                                        <tr key={item.vacationId}>
-                                            <td>{item.type}</td>
-                                            <td>{item.startDate} ~ {item.endDate}</td>
-                                            <td>{item.days}일</td>
-                                            <td>{item.status}</td>
-                                        </tr>
-                                        ))}
+                                        {historyLoading && (
+                                            <tr>
+                                                <td colSpan="4" style={{ textAlign: "center" }}>
+                                                    휴가 이력을 불러오는 중입니다.
+                                                </td>
+                                            </tr>
+                                        )}
+
+                                        {historyError && (
+                                            <tr>
+                                                <td colSpan="4" style={{ textAlign: "center" }}>
+                                                    휴가 이력을 불러오지 못했습니다.
+                                                </td>
+                                            </tr>
+                                        )}
+
+                                        {!historyLoading && !historyError && history.length === 0 && (
+                                            <tr>
+                                                <td colSpan="4" style={{ textAlign: "center" }}>
+                                                    휴가 이력이 없습니다.
+                                                </td>
+                                            </tr>
+                                        )}
+
+                                        {!historyLoading &&
+                                            !historyError &&
+                                            history.length > 0 &&
+                                            history.map((item) => (
+                                                <tr key={item.vacationId}>
+                                                    <td>{item.vacationType}</td>
+                                                    <td>{item.startDate} ~ {item.endDate}</td>
+                                                    <td>{item.days}일</td>
+                                                    <td style={{ textAlign: "right" }}>{item.status}</td>
+                                                </tr>
+                                            ))}
                                     </tbody>
                                 </table>
 
                                 <div className="table-footer">
                                     <p className="footer-info">
-                                        전체 17개의 휴가 이력 중 1~5번째 표시 중
+                                        총 {history.length}개의 휴가 이력
                                     </p>
-                                    <div className="pagination">
-                                        <button className="page-btn" type="button">
-                                            <span className="material-symbols-outlined">
-                                                chevron_left
-                                            </span>
-                                        </button>
-                                        <button className="page-btn active" type="button">
-                                            1
-                                        </button>
-                                        <button className="page-btn" type="button">
-                                            2
-                                        </button>
-                                        <button className="page-btn" type="button">
-                                            3
-                                        </button>
-                                        <button className="page-btn" type="button">
-                                            <span className="material-symbols-outlined">
-                                                chevron_right
-                                            </span>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </section>
 
-                        <section>
-                            <div
-                                className="section-header"
-                                style={{ justifyContent: "flex-start", gap: "8px" }}
-                            >
-                                <span
-                                    className="material-symbols-outlined"
-                                    style={{ color: "var(--primary)" }}
+                        {isAdmin && (
+                            <section>
+                                <div
+                                    className="section-header"
+                                    style={{ justifyContent: "flex-start", gap: "8px" }}
                                 >
-                                    verified_user
-                                </span>
-                                <h3 className="section-title">승인 대기열</h3>
-                            </div>
-
-                            <div className="queue-list">
-                                <div className="queue-item">
-                                    <div className="team-member">
-                                        <img
-                                            alt="팀원 사진"
-                                            className="team-avatar"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm_K93hoKl4Xlh2UumEz9oLB2VJY6-Z1toLOCL4nDFcrelXQPMX5wrMZ8JPUuKVhMDdv9n4YRaN4INXjJKsEhVjK1DCSeDgNt6cMqPQCuF3njUhWkQn8D-kL4Em0h_eTrS4Koc8rsOtqlIOmbL5vwHdunh922_-EwNZWfNVefeBpX9n8rKAOzbGOYcN-p6RLzX0T6i1dwURt1KnxIwfqrbAC_CSAb-5sQkRZ7lg5dmNJJYxFK0j4RyBDL94XoRnFAxi4Os-cdowpkX"
-                                        />
-                                        <div>
-                                            <p className="member-name">Julian Casablancas</p>
-                                            <p className="member-role">주니어 아키텍트</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="request-details">
-                                        <div>
-                                            <p className="detail-label">종류</p>
-                                            <p className="detail-value">교육 휴가</p>
-                                        </div>
-                                        <div style={{ textAlign: "right" }}>
-                                            <p className="detail-label">기간</p>
-                                            <p className="detail-value">2일</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="action-grid">
-                                        <button className="btn-reject" type="button">
-                                            반려
-                                        </button>
-                                        <button className="btn-approve" type="button">
-                                            승인
-                                        </button>
-                                    </div>
+                                    <span
+                                        className="material-symbols-outlined"
+                                        style={{ color: "var(--primary)" }}
+                                    >
+                                        verified_user
+                                    </span>
+                                    <h3 className="section-title">승인 대기열</h3>
                                 </div>
 
-                                <div className="queue-item">
-                                    <div className="team-member">
-                                        <img
-                                            alt="팀원 사진"
-                                            className="team-avatar"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgnF0_jerlKmdAmyhfI0tcGk0-rid2atP-v7pwrqnYMGTLmYTcXoaGy8utyxH9QtcC5y2mZfr3qIdlWU2b-C8hLrnJO3Zd0XQi30Er5Jsoa0olqOH_diuZJOg9IryHFiBtIkfOBu7raGw0dWtUr5EINoIalnjgxslvK18Qjy5T7hbPpUw1mQXu3idwjn3RrFGKI7YqoSj7q8HcbFEXt_Ou1Vo738myXL6RuHoPfDBmlfOyDGB5TI6S_w71a9OajQYSQDkmMB_Yr5pt"
-                                        />
-                                        <div>
-                                            <p className="member-name">Elena Gilbert</p>
-                                            <p className="member-role">리드 디자이너</p>
-                                        </div>
-                                    </div>
+                                <div className="queue-list">
+                                    {pendingLoading && (
+                                        <p style={{ padding: "16px" }}>승인 대기 목록을 불러오는 중입니다.</p>
+                                    )}
 
-                                    <div className="request-details">
-                                        <div>
-                                            <p className="detail-label">종류</p>
-                                            <p className="detail-value">연차 휴가</p>
-                                        </div>
-                                        <div style={{ textAlign: "right" }}>
-                                            <p className="detail-label">기간</p>
-                                            <p className="detail-value">5일</p>
-                                        </div>
-                                    </div>
+                                    {pendingError && (
+                                        <p style={{ padding: "16px" }}>승인 대기 목록을 불러오지 못했습니다.</p>
+                                    )}
 
-                                    <div className="action-grid">
-                                        <button className="btn-reject" type="button">
-                                            반려
-                                        </button>
-                                        <button className="btn-approve" type="button">
-                                            승인
-                                        </button>
-                                    </div>
+                                    {!pendingLoading && !pendingError && pendingVacations.length === 0 && (
+                                        <p style={{ padding: "16px" }}>현재 승인 대기 중인 휴가 요청이 없습니다.</p>
+                                    )}
+
+                                    {!pendingLoading &&
+                                        !pendingError &&
+                                        pendingVacations.length > 0 &&
+                                        pendingVacations.slice(0, 2).map((item) => (
+                                            <div className="queue-item" key={item.vacationId}>
+                                                <div className="team-member">
+                                                    <div>
+                                                        <p className="member-name">{item.memberName ?? "-"}</p>
+                                                        <p className="member-role">{item.status ?? "-"}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="request-details">
+                                                    <div>
+                                                        <p className="detail-label">종류</p>
+                                                        <p className="detail-value">{item.vacationType}</p>
+                                                    </div>
+                                                    <div style={{ textAlign: "right" }}>
+                                                        <p className="detail-label">기간</p>
+                                                        <p className="detail-value">{item.days}일</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="action-grid">
+                                                    <button
+                                                        className="btn-reject"
+                                                        type="button"
+                                                        onClick={() => handleReject(item.vacationId)}
+                                                    >
+                                                        반려
+                                                    </button>
+                                                    <button
+                                                        className="btn-approve"
+                                                        type="button"
+                                                        onClick={() => handleApprove(item.vacationId)}
+                                                    >
+                                                        승인
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+
+                                    <button
+                                        className="view-all-btn"
+                                        type="button"
+                                        onClick={goToVacationRequestList}
+                                    >
+                                        모든 요청 보기
+                                    </button>
                                 </div>
-
-                                <button
-                                    className="view-all-btn"
-                                    type="button"
-                                    onClick={() =>
-                                        (window.location.href = "/vacation-request-list")
-                                    }
-                                >
-                                    모든 요청 보기
-                                </button>
-                            </div>
-                        </section>
+                            </section>
+                        )}
                     </div>
                 </div>
             </main>
