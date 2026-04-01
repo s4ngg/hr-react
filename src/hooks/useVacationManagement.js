@@ -32,20 +32,15 @@ export const useVacationManagement = () => {
         updateVacationStatus({
             vacationId,
             status: "APPROVED",
-            adminComment: "",
         });
     };
 
     const handleReject = (vacationId) => {
         if (!isAdmin) return;
 
-        const reason = window.prompt("반려 사유를 입력하세요.");
-        if (reason === null) return;
-
         updateVacationStatus({
             vacationId,
             status: "REJECTED",
-            adminComment: reason,
         });
     };
 
