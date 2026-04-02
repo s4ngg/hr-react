@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../api/instance";
+import useAuthStore from "../store/authStore";
 
 // 내 휴가 내역 조회
 export const useMyVacationHistory = () => {
@@ -54,6 +55,7 @@ export const useUpdateVacationStatus = () => {
             return res.data;
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["myVacationQuota"] });
             queryClient.invalidateQueries({ queryKey: ["pendingVacations"] });
             queryClient.invalidateQueries({ queryKey: ["myVacationHistory"] });
         },
@@ -66,5 +68,19 @@ export const useUpdateVacationStatus = () => {
             alert(message);
             console.error("휴가 상태 변경 실패:", error);
         },
+    });
+};
+
+
+export const useMyVacationQuota = () => {
+    const { user } = useAuthStore();
+
+    return useQuery({
+        queryKey: ["myVacationQuota"],
+        queryFn: async () => {
+            const res = await api.get("/vacations/quota/my");
+            return res.data.data; 
+        },
+        enabled: !!user,
     });
 };

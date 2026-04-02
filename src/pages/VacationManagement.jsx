@@ -15,13 +15,13 @@ function VacationManagement() {
         pendingVacations,
         pendingLoading,
         pendingError,
-        totalVacationDays,
         usedVacationDays,
         remainingVacationDays,
         handleApprove,
         handleReject,
         goToVacationRequest,
         goToVacationRequestList,
+        pendingDays
     } = useVacationManagement();
 
 
