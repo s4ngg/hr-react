@@ -17,6 +17,7 @@ const useAuthStore = create(
                         role: data.role,
                         deptName: data.deptName,
                         departmentId: data.departmentId,
+                        hireDate:  data.hireDate
                     },
                 }),
 
