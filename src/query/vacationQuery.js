@@ -84,3 +84,14 @@ export const useMyVacationQuota = () => {
         enabled: !!user,
     });
 };
+
+export const useAllVacations = (enabled = true) => {
+    return useQuery({
+        queryKey: ["allVacations"],
+        queryFn: async () => {
+            const res = await api.get("/admin/vacations");
+            return res.data.data;
+        },
+        enabled,
+    });
+};
