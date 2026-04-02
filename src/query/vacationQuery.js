@@ -55,6 +55,7 @@ export const useUpdateVacationStatus = () => {
             return res.data;
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["allVacations"] });
             queryClient.invalidateQueries({ queryKey: ["myVacationQuota"] });
             queryClient.invalidateQueries({ queryKey: ["pendingVacations"] });
             queryClient.invalidateQueries({ queryKey: ["myVacationHistory"] });
