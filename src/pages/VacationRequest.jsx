@@ -3,8 +3,11 @@ import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/vacation-request.css?inline";
 import { useVacationRequest } from "../hooks/useVacationRequest";
+import useAuthStore from "../store/authStore";
 
 function VacationRequest() {
+    const { user } = useAuthStore();
+
     const {
         vacationType,
         setVacationType,
@@ -14,11 +17,14 @@ function VacationRequest() {
         setStartDate,
         days,
         setDays,
+        proxyEmployeeId,
+        setProxyEmployeeId,
         remainingVacationDays,
         expectedRemainingDays,
         handleSubmit,
         handleCancel,
         isPending,
+        minStartDate
     } = useVacationRequest();
 
     return (
@@ -67,7 +73,7 @@ function VacationRequest() {
                                     <input
                                         placeholder="사번 입력"
                                         type="text"
-                                        defaultValue="NP-2024-0812"
+                                        value={user?.employeeNo || ""}
                                         readOnly
                                     />
                                 </div>
@@ -81,7 +87,7 @@ function VacationRequest() {
                                     <input
                                         placeholder="이름 입력"
                                         type="text"
-                                        defaultValue="김철수"
+                                        value={user?.name || ""}
                                         readOnly
                                     />
                                 </div>
@@ -93,7 +99,7 @@ function VacationRequest() {
                                     <input
                                         placeholder="직책 입력"
                                         type="text"
-                                        defaultValue="시니어 매니저"
+                                        value={user?.role || ""}
                                         readOnly
                                     />
                                 </div>
@@ -105,7 +111,7 @@ function VacationRequest() {
                                     <input
                                         placeholder="부서 입력"
                                         type="text"
-                                        defaultValue="제품 디자인팀"
+                                        value={user?.deptName || ""}
                                         readOnly
                                     />
                                 </div>
@@ -117,7 +123,7 @@ function VacationRequest() {
                                     <input
                                         placeholder="입사일 입력"
                                         type="text"
-                                        defaultValue="2021년 05월 14일"
+                                        value={user?.hireDate || ""}
                                         readOnly
                                     />
                                 </div>
@@ -139,7 +145,8 @@ function VacationRequest() {
                                         <input
                                             placeholder="대리인 사번 입력"
                                             type="text"
-                                            defaultValue=""
+                                            value={proxyEmployeeId}
+                                            onChange={(e) => setProxyEmployeeId(e.target.value)}
                                         />
                                     </div>
                                 </div>
@@ -162,7 +169,9 @@ function VacationRequest() {
                                 </div>
 
                                 <div
-                                    className={`input-group ${vacationType === "기타" ? "" : "hidden"}`}
+                                    className={`input-group ${
+                                        vacationType === "기타" ? "" : "hidden"
+                                    }`}
                                     id="other-reason-group"
                                 >
                                     <label className="label">
@@ -194,6 +203,7 @@ function VacationRequest() {
                                         <input
                                             type="date"
                                             value={startDate}
+                                            min={minStartDate}
                                             onChange={(e) => setStartDate(e.target.value)}
                                         />
                                     </div>
@@ -207,12 +217,11 @@ function VacationRequest() {
                                             value={days}
                                             onChange={(e) => setDays(e.target.value)}
                                         >
-                                            <option value="0.5">0.5일 (반차)</option>
                                             <option value="1">1일</option>
                                             <option value="2">2일</option>
                                             <option value="3">3일</option>
                                             <option value="4">4일</option>
-                                            <option value="5">5일 이상</option>
+                                            <option value="5">5일</option>
                                         </select>
                                     </div>
                                 </div>
@@ -242,7 +251,11 @@ function VacationRequest() {
                             취소
                         </button>
 
-                        <button className="btn btn-primary" type="submit" disabled={isPending}>
+                        <button
+                            className="btn btn-primary"
+                            type="submit"
+                            disabled={isPending}
+                        >
                             신청하기
                             <span
                                 className="material-symbols-outlined"
