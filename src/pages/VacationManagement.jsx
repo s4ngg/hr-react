@@ -81,7 +81,7 @@ function VacationManagement() {
                                 >
                                     info
                                 </span>
-                                2024년 12월 31일까지 유효
+                                2026년 12월 31일까지 유효
                             </div>
                         </div>
 

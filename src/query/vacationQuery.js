@@ -61,6 +61,7 @@ export const useUpdateVacationStatus = () => {
         mutationFn: updateVacationStatus,
 
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["allVacations"] });
             queryClient.invalidateQueries({ queryKey: ["myVacationQuota"] });
             queryClient.invalidateQueries({ queryKey: ["pendingVacations"] });
             queryClient.invalidateQueries({ queryKey: ["myVacationHistory"] });
@@ -87,5 +88,16 @@ export const useMyVacationQuota = () => {
         queryKey: ["myVacationQuota"],
         queryFn: getMyVacationQuota,
         enabled: !!user,
+    });
+};
+
+export const useAllVacations = (enabled = true) => {
+    return useQuery({
+        queryKey: ["allVacations"],
+        queryFn: async () => {
+            const res = await api.get("/admin/vacations");
+            return res.data.data;
+        },
+        enabled,
     });
 };

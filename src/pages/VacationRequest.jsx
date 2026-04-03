@@ -1,11 +1,31 @@
-import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import withPageStyle from "../utils/withPageStyle.jsx";
 import pageCss from "../styles/vacation-request.css?inline";
+import { useVacationRequest } from "../hooks/useVacationRequest";
+import useAuthStore from "../store/authStore";
 
 function VacationRequest() {
-    const [reason, setReason] = useState("기타");
+    const { user } = useAuthStore();
+
+    const {
+        vacationType,
+        setVacationType,
+        detailReason,
+        setDetailReason,
+        startDate,
+        setStartDate,
+        days,
+        setDays,
+        proxyEmployeeId,
+        setProxyEmployeeId,
+        remainingVacationDays,
+        expectedRemainingDays,
+        handleSubmit,
+        handleCancel,
+        isPending,
+        minStartDate
+    } = useVacationRequest();
 
     return (
         <>
@@ -30,7 +50,7 @@ function VacationRequest() {
                     </p>
                 </div>
 
-                <form onSubmit={(e) => e.preventDefault()}>
+                <form onSubmit={handleSubmit}>
                     <div className="section-title">대상자 정보</div>
 
                     <div className="form-card employee-info-layout">
@@ -53,7 +73,8 @@ function VacationRequest() {
                                     <input
                                         placeholder="사번 입력"
                                         type="text"
-                                        defaultValue="NP-2024-0812"
+                                        value={user?.employeeNo || ""}
+                                        readOnly
                                     />
                                 </div>
                             </div>
@@ -66,7 +87,8 @@ function VacationRequest() {
                                     <input
                                         placeholder="이름 입력"
                                         type="text"
-                                        defaultValue="김철수"
+                                        value={user?.name || ""}
+                                        readOnly
                                     />
                                 </div>
                             </div>
@@ -77,7 +99,8 @@ function VacationRequest() {
                                     <input
                                         placeholder="직책 입력"
                                         type="text"
-                                        defaultValue="시니어 매니저"
+                                        value={user?.role || ""}
+                                        readOnly
                                     />
                                 </div>
                             </div>
@@ -88,7 +111,8 @@ function VacationRequest() {
                                     <input
                                         placeholder="부서 입력"
                                         type="text"
-                                        defaultValue="제품 디자인팀"
+                                        value={user?.deptName || ""}
+                                        readOnly
                                     />
                                 </div>
                             </div>
@@ -99,7 +123,8 @@ function VacationRequest() {
                                     <input
                                         placeholder="입사일 입력"
                                         type="text"
-                                        defaultValue="2021년 05월 14일"
+                                        value={user?.hireDate || ""}
+                                        readOnly
                                     />
                                 </div>
                             </div>
@@ -120,7 +145,8 @@ function VacationRequest() {
                                         <input
                                             placeholder="대리인 사번 입력"
                                             type="text"
-                                            defaultValue="NP-ADMIN-001"
+                                            value={proxyEmployeeId}
+                                            onChange={(e) => setProxyEmployeeId(e.target.value)}
                                         />
                                     </div>
                                 </div>
@@ -131,8 +157,8 @@ function VacationRequest() {
                                         <span className="material-symbols-outlined">category</span>
                                         <select
                                             id="reason-select"
-                                            value={reason}
-                                            onChange={(e) => setReason(e.target.value)}
+                                            value={vacationType}
+                                            onChange={(e) => setVacationType(e.target.value)}
                                         >
                                             <option value="교육">교육</option>
                                             <option value="병가">병가</option>
@@ -143,7 +169,9 @@ function VacationRequest() {
                                 </div>
 
                                 <div
-                                    className={`input-group ${reason === "기타" ? "" : "hidden"}`}
+                                    className={`input-group ${
+                                        vacationType === "기타" ? "" : "hidden"
+                                    }`}
                                     id="other-reason-group"
                                 >
                                     <label className="label">
@@ -154,6 +182,8 @@ function VacationRequest() {
                                         <input
                                             placeholder="상세 사유를 입력하세요"
                                             type="text"
+                                            value={detailReason}
+                                            onChange={(e) => setDetailReason(e.target.value)}
                                         />
                                     </div>
                                 </div>
@@ -170,7 +200,12 @@ function VacationRequest() {
                                         <span className="material-symbols-outlined">
                                             calendar_today
                                         </span>
-                                        <input type="date" defaultValue="2024-10-24" />
+                                        <input
+                                            type="date"
+                                            value={startDate}
+                                            min={minStartDate}
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                        />
                                     </div>
                                 </div>
 
@@ -178,13 +213,15 @@ function VacationRequest() {
                                     <label className="label">사용 일수</label>
                                     <div className="input-container">
                                         <span className="material-symbols-outlined">timer</span>
-                                        <select defaultValue="1">
-                                            <option value="0.5">0.5일 (반차)</option>
+                                        <select
+                                            value={days}
+                                            onChange={(e) => setDays(e.target.value)}
+                                        >
                                             <option value="1">1일</option>
                                             <option value="2">2일</option>
                                             <option value="3">3일</option>
                                             <option value="4">4일</option>
-                                            <option value="5">5일 이상</option>
+                                            <option value="5">5일</option>
                                         </select>
                                     </div>
                                 </div>
@@ -192,13 +229,13 @@ function VacationRequest() {
                                 <div className="summary-box">
                                     <div className="summary-row">
                                         <span className="label">잔여 연차</span>
-                                        <span className="value">12.5일</span>
+                                        <span className="value">{remainingVacationDays}일</span>
                                     </div>
                                     <div className="progress-bar">
                                         <div className="progress-fill"></div>
                                     </div>
                                     <p className="hint">
-                                        * 이번 신청 승인 시 11.5일이 남게 됩니다.
+                                        * 이번 신청 승인 시 {expectedRemainingDays}일이 남게 됩니다.
                                     </p>
                                 </div>
                             </div>
@@ -209,12 +246,16 @@ function VacationRequest() {
                         <button
                             className="btn btn-secondary"
                             type="button"
-                            onClick={() => (window.location.href = "/vacation-management")}
+                            onClick={handleCancel}
                         >
                             취소
                         </button>
 
-                        <button className="btn btn-primary" type="submit">
+                        <button
+                            className="btn btn-primary"
+                            type="submit"
+                            disabled={isPending}
+                        >
                             신청하기
                             <span
                                 className="material-symbols-outlined"
@@ -227,7 +268,7 @@ function VacationRequest() {
                 </form>
             </main>
         </>
-    )
+    );
 }
 
 export default withPageStyle(VacationRequest, "vacation-request.css", pageCss);
