@@ -1,7 +1,7 @@
 import api from "./instance";
 
-const BASE_URL = "/vacations";
-const ADMIN_BASE_URL = "/admin/vacations";
+const BASE_URL = "https://d1m2mdh79i68qn.cloudfront.net/vacations";
+const ADMIN_BASE_URL = "https://d1m2mdh79i68qn.cloudfront.net/admin/vacations";
 
 // 휴가 신청
 export const requestVacation = async (dto) => {

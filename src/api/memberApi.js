@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = '/api/members';
+const BASE_URL = 'https://d1m2mdh79i68qn.cloudfront.net/api/members';
 
 // 전체 직원 조회 (페이징)
 export const getMemberList = async () => {
