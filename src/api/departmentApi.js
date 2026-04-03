@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = '/api/department';
+const BASE_URL = 'https://d1m2mdh79i68qn.cloudfront.net/api/department';
 
 // 부서 목록 조회
 export const getDepartmentList = async () => {
